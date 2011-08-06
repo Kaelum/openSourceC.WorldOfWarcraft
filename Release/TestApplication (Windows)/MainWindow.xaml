@@ -1,0 +1,21 @@
+﻿<Window x:Class="TestApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="World of Warcraft Realm Status" Height="768" Width="1236" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+	<Grid Margin="0">
+		<GroupBox Header="Download Files Service Actions" Height="59" Margin="12,12,0,0" Name="ServiceActionsGroupBox" VerticalAlignment="Top" HorizontalContentAlignment="Left" HorizontalAlignment="Left" Width="368">
+			<Grid>
+				<Button Content="Run" Height="23" HorizontalAlignment="Left" Margin="6,6,0,0" Name="RunServiceButton" VerticalAlignment="Top" Width="64" />
+				<Button Content="Stop" Height="23" HorizontalAlignment="Left" Margin="76,6,0,0" Name="StopServiceButton" VerticalAlignment="Top" Width="64" />
+				<Button Content="Pause" Height="23" HorizontalAlignment="Left" Margin="146,6,0,0" Name="PauseServiceButton" VerticalAlignment="Top" Width="64" />
+				<Button Content="Resume" Height="23" HorizontalAlignment="Left" Margin="216,6,0,0" Name="ResumeServiceButton" VerticalAlignment="Top" Width="64" />
+				<Button Height="23" HorizontalAlignment="Left" Margin="286,6,0,0" Name="UnknownServiceButton" VerticalAlignment="Top" Width="64" />
+			</Grid>
+		</GroupBox>
+		<GroupBox Header="Event Messages" Height="705" HorizontalAlignment="Left" Margin="390,12,0,0" Name="EventMessagesGroupBox" VerticalAlignment="Top" Width="812" Padding="0">
+			<ListBox Name="EventMessageListBox" />
+		</GroupBox>
+		<Button Content="Fix Records" HorizontalAlignment="Left" Margin="154,411,0,0" Name="FixRecordsButton" VerticalAlignment="Top" Height="23" Width="74" Click="FixRecordsButton_Click" />
+		<TextBox Height="262" HorizontalAlignment="Left" Margin="12,449,0,0" Name="MessageTextBox" VerticalAlignment="Top" Width="368" AcceptsReturn="True" AcceptsTab="True" IsReadOnly="True" AutoWordSelection="True" TextWrapping="Wrap" />
+	</Grid>
+</Window>
