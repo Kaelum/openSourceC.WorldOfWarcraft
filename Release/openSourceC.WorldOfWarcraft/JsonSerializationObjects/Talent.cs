@@ -4,27 +4,28 @@ using System.Collections.Generic;
 namespace openSourceC.WorldOfWarcraft
 {
 	/// <summary>
-	///		Summary description for Realm.
+	///		Summary description for Talent.
 	/// </summary>
 	[Serializable]
-	public class Realm
+	public class Talent
 	{
+		/// <summary></summary>
+		public bool Selected;
+
 		/// <summary></summary>
 		public string Name;
 
 		/// <summary></summary>
-		public string Slug;
+		public string Icon;
 
 		/// <summary></summary>
-		public RealmTypeEnum Type;
+		public string Build;
+
 
 		/// <summary></summary>
-		public bool Queue;
+		public List<TalentTree> Trees;
 
 		/// <summary></summary>
-		public bool Status;
-
-		/// <summary></summary>
-		public RealmPopulationEnum Population;
+		public TalentGlyphs Glyphs;
 	}
 }

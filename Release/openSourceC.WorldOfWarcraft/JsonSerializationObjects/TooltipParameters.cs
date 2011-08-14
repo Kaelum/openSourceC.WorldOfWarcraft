@@ -4,27 +4,24 @@ using System.Collections.Generic;
 namespace openSourceC.WorldOfWarcraft
 {
 	/// <summary>
-	///		Summary description for Realm.
+	///		Summary description for Item.
 	/// </summary>
 	[Serializable]
-	public class Realm
+	public class TooltipParameters
 	{
 		/// <summary></summary>
-		public string Name;
+		public int Gem0;
 
 		/// <summary></summary>
-		public string Slug;
+		public int Gem1;
 
 		/// <summary></summary>
-		public RealmTypeEnum Type;
+		public bool ExtraSocket;
 
 		/// <summary></summary>
-		public bool Queue;
+		public int Enchant;
 
 		/// <summary></summary>
-		public bool Status;
-
-		/// <summary></summary>
-		public RealmPopulationEnum Population;
+		public List<int> Set;
 	}
 }

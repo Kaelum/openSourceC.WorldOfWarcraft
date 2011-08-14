@@ -4,27 +4,24 @@ using System.Collections.Generic;
 namespace openSourceC.WorldOfWarcraft
 {
 	/// <summary>
-	///		Summary description for Realm.
+	///		Summary description for Emblem.
 	/// </summary>
 	[Serializable]
-	public class Realm
+	public class Emblem
 	{
 		/// <summary></summary>
-		public string Name;
+		public int Icon;
 
 		/// <summary></summary>
-		public string Slug;
+		public string IconColor;
 
 		/// <summary></summary>
-		public RealmTypeEnum Type;
+		public int Border;
 
 		/// <summary></summary>
-		public bool Queue;
+		public string BorderColor;
 
 		/// <summary></summary>
-		public bool Status;
-
-		/// <summary></summary>
-		public RealmPopulationEnum Population;
+		public string BackgroundColor;
 	}
 }

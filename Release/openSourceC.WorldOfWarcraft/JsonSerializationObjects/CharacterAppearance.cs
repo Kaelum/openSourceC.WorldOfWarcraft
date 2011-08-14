@@ -4,27 +4,30 @@ using System.Collections.Generic;
 namespace openSourceC.WorldOfWarcraft
 {
 	/// <summary>
-	///		Summary description for Realm.
+	///		Summary description for CharacterAppearance.
 	/// </summary>
 	[Serializable]
-	public class Realm
+	public class CharacterAppearance
 	{
 		/// <summary></summary>
-		public string Name;
+		public int FaceVariation;
 
 		/// <summary></summary>
-		public string Slug;
+		public int SkinColor;
 
 		/// <summary></summary>
-		public RealmTypeEnum Type;
+		public int HairVariation;
 
 		/// <summary></summary>
-		public bool Queue;
+		public int HairColor;
 
 		/// <summary></summary>
-		public bool Status;
+		public int FeatureVariation;
 
 		/// <summary></summary>
-		public RealmPopulationEnum Population;
+		public bool ShowHelm;
+
+		/// <summary></summary>
+		public bool ShowCloak;
 	}
 }

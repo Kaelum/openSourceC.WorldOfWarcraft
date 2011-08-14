@@ -4,27 +4,27 @@ using System.Collections.Generic;
 namespace openSourceC.WorldOfWarcraft
 {
 	/// <summary>
-	///		Summary description for Realm.
+	///		Summary description for Achievements.
 	/// </summary>
 	[Serializable]
-	public class Realm
+	public class Achievements
 	{
 		/// <summary></summary>
-		public string Name;
+		public List<int> AchievementsCompleted;
 
 		/// <summary></summary>
-		public string Slug;
+		public List<long> AchievementsCompletedTimestamp;
 
 		/// <summary></summary>
-		public RealmTypeEnum Type;
+		public List<int> Criteria;
 
 		/// <summary></summary>
-		public bool Queue;
+		public List<long> CriteriaQuantity;
 
 		/// <summary></summary>
-		public bool Status;
+		public List<long> CriteriaTimestamp;
 
 		/// <summary></summary>
-		public RealmPopulationEnum Population;
+		public List<long> CriteriaCreated;
 	}
 }

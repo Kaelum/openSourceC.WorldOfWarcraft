@@ -4,27 +4,33 @@ using System.Collections.Generic;
 namespace openSourceC.WorldOfWarcraft
 {
 	/// <summary>
-	///		Summary description for Realm.
+	///		Summary description for Character.
 	/// </summary>
 	[Serializable]
-	public class Realm
+	public class Character
 	{
 		/// <summary></summary>
 		public string Name;
 
 		/// <summary></summary>
-		public string Slug;
+		public string Realm;
 
 		/// <summary></summary>
-		public RealmTypeEnum Type;
+		public int Class;
 
 		/// <summary></summary>
-		public bool Queue;
+		public int Race;
 
 		/// <summary></summary>
-		public bool Status;
+		public int Gender;
 
 		/// <summary></summary>
-		public RealmPopulationEnum Population;
+		public int Level;
+
+		/// <summary></summary>
+		public int AchievementPoints;
+
+		/// <summary></summary>
+		public string Thumbnail;
 	}
 }
