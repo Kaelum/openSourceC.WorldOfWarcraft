@@ -4,27 +4,27 @@ using System.Collections.Generic;
 namespace openSourceC.WorldOfWarcraft
 {
 	/// <summary>
-	///		Summary description for Realm.
+	///		Summary description for Profession.
 	/// </summary>
 	[Serializable]
-	public class Realm
+	public class Profession
 	{
+		/// <summary></summary>
+		public int Id;
+
 		/// <summary></summary>
 		public string Name;
 
 		/// <summary></summary>
-		public string Slug;
+		public string Icon;
 
 		/// <summary></summary>
-		public RealmTypeEnum Type;
+		public int Rank;
 
 		/// <summary></summary>
-		public bool Queue;
+		public int Max;
 
 		/// <summary></summary>
-		public bool Status;
-
-		/// <summary></summary>
-		public RealmPopulationEnum Population;
+		public List<int> Recipes;
 	}
 }

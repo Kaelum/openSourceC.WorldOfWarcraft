@@ -4,27 +4,33 @@ using System.Collections.Generic;
 namespace openSourceC.WorldOfWarcraft
 {
 	/// <summary>
-	///		Summary description for Realm.
+	///		Summary description for ItemSpells.
 	/// </summary>
 	[Serializable]
-	public class Realm
+	public class Spell
 	{
+		/// <summary></summary>
+		public int Id;
+
 		/// <summary></summary>
 		public string Name;
 
 		/// <summary></summary>
-		public string Slug;
+		public string Subtext;
 
 		/// <summary></summary>
-		public RealmTypeEnum Type;
+		public string Icon;
 
 		/// <summary></summary>
-		public bool Queue;
+		public string Description;
 
 		/// <summary></summary>
-		public bool Status;
+		public string Range;
 
 		/// <summary></summary>
-		public RealmPopulationEnum Population;
+		public string CastTime;
+
+		/// <summary></summary>
+		public string Cooldown;
 	}
 }

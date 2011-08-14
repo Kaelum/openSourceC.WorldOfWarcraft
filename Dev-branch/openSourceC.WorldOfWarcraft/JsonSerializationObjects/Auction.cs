@@ -4,27 +4,27 @@ using System.Collections.Generic;
 namespace openSourceC.WorldOfWarcraft
 {
 	/// <summary>
-	///		Summary description for Realm.
+	///		Summary description for Auction.
 	/// </summary>
 	[Serializable]
-	public class Realm
+	public class Auction
 	{
 		/// <summary></summary>
-		public string Name;
+		public long Auc;
 
 		/// <summary></summary>
-		public string Slug;
+		public int Item;
 
 		/// <summary></summary>
-		public RealmTypeEnum Type;
+		public string Owner;
 
 		/// <summary></summary>
-		public bool Queue;
+		public long Bid;
 
 		/// <summary></summary>
-		public bool Status;
+		public long Buyout;
 
 		/// <summary></summary>
-		public RealmPopulationEnum Population;
+		public int Quantity;
 	}
 }

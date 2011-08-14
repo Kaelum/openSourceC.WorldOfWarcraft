@@ -4,9 +4,9 @@ using System.Web.Script.Serialization;
 namespace openSourceC.WorldOfWarcraft
 {
 	/// <summary>
-	///		Summary description for RealmStatusTypeResolver.
+	///		Summary description for WowJavaScriptTypeResolver.
 	/// </summary>
-	public class RealmStatusTypeResolver : JavaScriptTypeResolver
+	public class WowJavaScriptTypeResolver : JavaScriptTypeResolver
 	{
 		/// <summary>
 		///		
