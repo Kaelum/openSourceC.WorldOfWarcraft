@@ -28,7 +28,11 @@ namespace openSourceC.WorldOfWarcraft
 		private const string _apiKeyRealmStatus = "realmStatus";
 
 		private const string _fieldsQueryStringKey = "fields";
+		private const string _localeQueryStringKey = "locale";
 		private const string _realmsQueryStringKey = "realms";
+
+		private string _currentRegionKey;
+		private string _currentLocale;
 
 
 		#region Constructors
@@ -36,26 +40,59 @@ namespace openSourceC.WorldOfWarcraft
 		/// <summary>
 		///		Class constructor.
 		/// </summary>
-		public CommunityPlatformClient() { }
+		public CommunityPlatformClient()
+		{
+			_currentRegionKey = WorldOfWarcraftSection.Instance.Regions.Default;
+			_currentLocale = null;
+		}
 
 		#endregion
 
 		#region Public Properties
 
 		/// <summary>
-		///		Gets the default region key from the configuration file.
+		///		Gets or sets the current region key.
+		///		<remarks>Resets <see cref="P:CurrentLocale"/> to null.</remarks>
 		///	</summary>
-		public string DefaultRegionKey
+		public string CurrentRegionKey
 		{
-			get { return WorldOfWarcraftSection.Instance.RegionSettings.Default; }
+			get { return _currentRegionKey; }
+
+			set
+			{
+				if (string.IsNullOrWhiteSpace(value)) { return; }
+
+				if (WorldOfWarcraftSection.Instance.Regions[value] == null)
+				{
+					throw new IndexOutOfRangeException(string.Format("Unknown region key: {0}.", value));
+				}
+
+				_currentRegionKey = value;
+				_currentLocale = null;
+			}
 		}
 
 		/// <summary>
-		///		Gets the collection of regions from the configuration file.
-		/// </summary>
-		public RegionSettingsCollection Regions
+		///		Gets or sets the current locale.
+		///	</summary>
+		public string CurrentLocale
 		{
-			get { return WorldOfWarcraftSection.Instance.RegionSettings; }
+			get { return _currentLocale; }
+
+			set
+			{
+				if (string.IsNullOrWhiteSpace(_currentRegionKey))
+				{
+					throw new SystemException("'CurrentRegionKey' not set.");
+				}
+
+				if (WorldOfWarcraftSection.Instance.Regions[_currentRegionKey].Locales[value] == null)
+				{
+					throw new IndexOutOfRangeException(string.Format("Unknown locale: {0}.", value));
+				}
+
+				_currentLocale = value;
+			}
 		}
 
 		#endregion
@@ -137,19 +174,18 @@ namespace openSourceC.WorldOfWarcraft
 		/// <summary>
 		///		Gets the profile of the specified arena team on the specified realm.
 		/// </summary>
-		/// <param name="region">The BATTLE.NET region to use. (null = default)</param>
 		/// <param name="realm">The realm that the team is on.</param>
 		/// <param name="teamSize">The team size.</param>
 		/// <param name="teamName">The name of the team.</param>
 		/// <returns>
 		///		A JSON formatted response string.
 		/// </returns>
-		public string GetArenaTeam(string region, string realm, ArenaTeamSizeEnum teamSize, string teamName)
+		public string GetArenaTeam(string realm, ArenaTeamSizeEnum teamSize, string teamName)
 		{
 			string teamSizeName = teamSize.ToString("F").Replace("Arena", string.Empty);
 			string urlPath = string.Format(ApiSettings[_apiKeyArenaTeam].Path, realm, teamSizeName, teamName);
 
-			return GetResponse(region, urlPath, null);
+			return GetResponse(urlPath, null);
 		}
 
 		#endregion
@@ -190,16 +226,15 @@ namespace openSourceC.WorldOfWarcraft
 		/// <summary>
 		///		Gets the auction house data dump header for the specified realm.
 		/// </summary>
-		/// <param name="region">The BATTLE.NET region to use. (null = default)</param>
 		/// <param name="realm">The realm to receive auction house data for.</param>
 		/// <returns>
 		///		A JSON formatted string.
 		/// </returns>
-		public string GetAuctionDataHeader(string region, string realm)
+		public string GetAuctionDataHeader(string realm)
 		{
 			string urlPath = string.Format(ApiSettings[_apiKeyAuctionData].Path, realm);
 
-			return GetResponse(region, urlPath, null);
+			return GetResponse(urlPath, null);
 		}
 
 		#endregion
@@ -224,15 +259,14 @@ namespace openSourceC.WorldOfWarcraft
 		/// <summary>
 		///		Gets the character classes.
 		/// </summary>
-		/// <param name="region">The BATTLE.NET region to use. (null = default)</param>
 		/// <returns>
 		///		A JSON formatted response string.
 		/// </returns>
-		public string GetCharacterClasses(string region)
+		public string GetCharacterClasses()
 		{
 			string urlPath = ApiSettings[_apiKeyCharacterClasses].Path;
 
-			return GetResponse(region, urlPath, null);
+			return GetResponse(urlPath, null);
 		}
 
 		#endregion
@@ -257,14 +291,13 @@ namespace openSourceC.WorldOfWarcraft
 		/// <summary>
 		///		Gets the profile of the specified character on the specified realm.
 		/// </summary>
-		/// <param name="region">The BATTLE.NET region to use. (null = default)</param>
 		/// <param name="realm">The realm that the character is on.</param>
 		/// <param name="character">The name of the character.</param>
 		/// <param name="fields">A bitwise combination of the enumeration values.</param>
 		/// <returns>
 		///		A JSON formatted response string.
 		/// </returns>
-		public string GetCharacterProfile(string region, string realm, string character, CharacterProfileOptionalFieldsEnum fields)
+		public string GetCharacterProfile(string realm, string character, CharacterProfileOptionalFieldsEnum fields)
 		{
 			StringBuilder query = new StringBuilder();
 
@@ -275,7 +308,7 @@ namespace openSourceC.WorldOfWarcraft
 
 			string urlPath = string.Format(ApiSettings[_apiKeyCharacterProfile].Path, realm, character);
 
-			return GetResponse(region, urlPath, query.ToString());
+			return GetResponse(urlPath, query);
 		}
 
 		#endregion
@@ -300,15 +333,14 @@ namespace openSourceC.WorldOfWarcraft
 		/// <summary>
 		///		Gets the character races.
 		/// </summary>
-		/// <param name="region">The BATTLE.NET region to use. (null = default)</param>
 		/// <returns>
 		///		A JSON formatted response string.
 		/// </returns>
-		public string GetCharacterRaces(string region)
+		public string GetCharacterRaces()
 		{
 			string urlPath = ApiSettings[_apiKeyCharacterRaces].Path;
 
-			return GetResponse(region, urlPath, null);
+			return GetResponse(urlPath, null);
 		}
 
 		#endregion
@@ -333,15 +365,14 @@ namespace openSourceC.WorldOfWarcraft
 		/// <summary>
 		///		Gets the guild perks.
 		/// </summary>
-		/// <param name="region">The BATTLE.NET region to use. (null = default)</param>
 		/// <returns>
 		///		A JSON formatted response string.
 		/// </returns>
-		public string GetGuildPerks(string region)
+		public string GetGuildPerks()
 		{
 			string urlPath = ApiSettings[_apiKeyGuildPerks].Path;
 
-			return GetResponse(region, urlPath, null);
+			return GetResponse(urlPath, null);
 		}
 
 		#endregion
@@ -366,14 +397,13 @@ namespace openSourceC.WorldOfWarcraft
 		/// <summary>
 		///		Gets the profile of the specified guild on the specified realm.
 		/// </summary>
-		/// <param name="region">The BATTLE.NET region to use. (null = default)</param>
 		/// <param name="realm">The realm that the guild is on.</param>
 		/// <param name="guild">The name of the guild.</param>
 		/// <param name="fields">A bitwise combination of the enumeration values.</param>
 		/// <returns>
 		///		A JSON formatted response string.
 		/// </returns>
-		public string GetGuildProfile(string region, string realm, string guild, GuildProfileOptionalFieldsEnum fields)
+		public string GetGuildProfile(string realm, string guild, GuildProfileOptionalFieldsEnum fields)
 		{
 			StringBuilder query = new StringBuilder();
 
@@ -384,7 +414,7 @@ namespace openSourceC.WorldOfWarcraft
 
 			string urlPath = string.Format(ApiSettings[_apiKeyGuildProfile].Path, realm, guild);
 
-			return GetResponse(region, urlPath, query.ToString());
+			return GetResponse(urlPath, query);
 		}
 
 		#endregion
@@ -409,15 +439,14 @@ namespace openSourceC.WorldOfWarcraft
 		/// <summary>
 		///		Gets the guild rewards.
 		/// </summary>
-		/// <param name="region">The BATTLE.NET region to use. (null = default)</param>
 		/// <returns>
 		///		A JSON formatted response string.
 		/// </returns>
-		public string GetGuildRewards(string region)
+		public string GetGuildRewards()
 		{
 			string urlPath = ApiSettings[_apiKeyGuildRewards].Path;
 
-			return GetResponse(region, urlPath, null);
+			return GetResponse(urlPath, null);
 		}
 
 		#endregion
@@ -442,16 +471,15 @@ namespace openSourceC.WorldOfWarcraft
 		/// <summary>
 		///		Gets the details for the specified item.
 		/// </summary>
-		/// <param name="region">The BATTLE.NET region to use. (null = default)</param>
 		/// <param name="itemId">The id of the item to get details for.</param>
 		/// <returns>
 		///		A JSON formatted string.
 		/// </returns>
-		public string GetItem(string region, int itemId)
+		public string GetItem(int itemId)
 		{
 			string urlPath = string.Format(ApiSettings[_apiKeyItem].Path, itemId);
 
-			return GetResponse(region, urlPath, null);
+			return GetResponse(urlPath, null);
 		}
 
 		#endregion
@@ -476,15 +504,14 @@ namespace openSourceC.WorldOfWarcraft
 		/// <summary>
 		///		Gets the item classes.
 		/// </summary>
-		/// <param name="region">The BATTLE.NET region to use. (null = default)</param>
 		/// <returns>
 		///		A JSON formatted response string.
 		/// </returns>
-		public string GetItemClasses(string region)
+		public string GetItemClasses()
 		{
 			string urlPath = ApiSettings[_apiKeyItemClasses].Path;
 
-			return GetResponse(region, urlPath, null);
+			return GetResponse(urlPath, null);
 		}
 
 		#endregion
@@ -510,12 +537,11 @@ namespace openSourceC.WorldOfWarcraft
 		///		Gets the status of the specified realms.  If relams is null or empty, the entire
 		///		list of realms for the region is returned.
 		/// </summary>
-		/// <param name="region">The BATTLE.NET region to use. (null = default)</param>
 		/// <param name="realms">A comma seperated list of realms to retrieve. (optional)</param>
 		/// <returns>
 		///		A JSON formatted string.
 		/// </returns>
-		public string GetRealmStatus(string region, string realms = null)
+		public string GetRealmStatus(string realms = null)
 		{
 			StringBuilder query = new StringBuilder();
 
@@ -526,21 +552,20 @@ namespace openSourceC.WorldOfWarcraft
 
 			string urlPath = ApiSettings[_apiKeyRealmStatus].Path;
 
-			return GetResponse(region, urlPath, query.ToString());
+			return GetResponse(urlPath, query);
 		}
 
 		/// <summary>
 		///		Gets the status of the specified realms.  If relams is null or empty, the entire
 		///		list of realms for the region is returned.
 		/// </summary>
-		/// <param name="region">The BATTLE.NET region to use. (null = default)</param>
 		/// <param name="realms">An <see cref="T:IEnumerable&lt;string&gt;"/> list of realms to retrieve.</param>
 		/// <returns>
 		///		A JSON formatted string.
 		/// </returns>
-		public string GetRealmStatus(string region, IEnumerable<string> realms)
+		public string GetRealmStatus(IEnumerable<string> realms)
 		{
-			return GetRealmStatus(region, JoinList(realms));
+			return GetRealmStatus(JoinList(realms));
 		}
 
 		#endregion
@@ -549,20 +574,27 @@ namespace openSourceC.WorldOfWarcraft
 
 		#region Private Methods
 
-		private string GetResponse(string region, string urlPath, string queryString)
+		private string GetResponse(string urlPath, StringBuilder queryStringBuilder)
 		{
-			RegionSettings settings = Regions[region ?? DefaultRegionKey];
+			RegionElement settings = WorldOfWarcraftSection.Instance.Regions[CurrentRegionKey];
+
+			if (queryStringBuilder == null)
+			{
+				queryStringBuilder = new StringBuilder();
+			}
+
+			queryStringBuilder.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
 
 			UriBuilder requestUri = new UriBuilder(settings.Host);
 			requestUri.Path = urlPath;
-			requestUri.Query = queryString;
+			requestUri.Query = queryStringBuilder.ToString();
 
-			// Blizzard recommends using secure requests, but their servers currently do not
-			// support secure requests.
-			//if (requestUri.Scheme.Equals("http", StringComparison.InvariantCultureIgnoreCase))
-			//{
-			//    requestUri.Scheme = "https";
-			//}
+			// Blizzard recommends using secure requests when using authorization.
+			if (UseAuthorization && requestUri.Scheme.Equals("http", StringComparison.InvariantCultureIgnoreCase))
+			{
+				requestUri.Scheme = "https";
+				requestUri.Port = 443;
+			}
 
 			HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(requestUri.Uri);
 
@@ -589,6 +621,8 @@ namespace openSourceC.WorldOfWarcraft
 			}
 			catch (WebException ex)
 			{
+				if (ex.Response == null) { throw; }
+
 				using (Stream stream = ex.Response.GetResponseStream())
 				using (StreamReader reader = new StreamReader(stream))
 				{
