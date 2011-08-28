@@ -98,6 +98,8 @@
     <Compile Include="JsonSerializationObjects\CharacterRace.cs" />
     <Compile Include="JsonSerializationObjects\CharacterRacesResponse.cs" />
     <Compile Include="JsonSerializationObjects\Damage.cs" />
+    <Compile Include="JsonSerializationObjects\DataAchievement.cs" />
+    <Compile Include="JsonSerializationObjects\DataAchievementsResponse.cs" />
     <Compile Include="JsonSerializationObjects\File.cs" />
     <Compile Include="JsonSerializationObjects\GuildPerk.cs" />
     <Compile Include="JsonSerializationObjects\GuildPerksResponse.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="JsonSerializationObjects\CharacterStats.cs" />
     <Compile Include="JsonSerializationObjects\GuildProfileResponse.cs" />
     <Compile Include="JsonSerializationObjects\Item.cs" />
+    <Compile Include="JsonSerializationObjects\Quest.cs" />
     <Compile Include="JsonSerializationObjects\RaidProgression.cs" />
     <Compile Include="JsonSerializationObjects\Socket.cs" />
     <Compile Include="JsonSerializationObjects\SocketInfo.cs" />
