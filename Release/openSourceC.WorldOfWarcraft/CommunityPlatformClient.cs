@@ -17,14 +17,17 @@ namespace openSourceC.WorldOfWarcraft
 	{
 		private const string _apiKeyArenaTeam = "arenaTeam";
 		private const string _apiKeyAuctionData = "auctionData";
+		private const string _apiKeyCharacterAchievements = "characterAchievements";
 		private const string _apiKeyCharacterClasses = "characterClasses";
 		private const string _apiKeyCharacterProfile = "characterProfile";
 		private const string _apiKeyCharacterRaces = "characterRaces";
+		private const string _apiKeyGuildAchievements = "guildAchievements";
 		private const string _apiKeyGuildPerks = "guildPerks";
 		private const string _apiKeyGuildProfile = "guildProfile";
 		private const string _apiKeyGuildRewards = "guildRewards";
 		private const string _apiKeyItem = "item";
 		private const string _apiKeyItemClasses = "itemClasses";
+		private const string _apiKeyQuest = "quest";
 		private const string _apiKeyRealmStatus = "realmStatus";
 
 		private const string _fieldsQueryStringKey = "fields";
@@ -60,7 +63,12 @@ namespace openSourceC.WorldOfWarcraft
 
 			set
 			{
-				if (string.IsNullOrWhiteSpace(value)) { return; }
+				if (string.IsNullOrWhiteSpace(value))
+				{
+					_currentRegionKey = WorldOfWarcraftSection.Instance.Regions.Default;
+					_currentLocale = null;
+					return;
+				}
 
 				if (WorldOfWarcraftSection.Instance.Regions[value] == null)
 				{
@@ -182,10 +190,13 @@ namespace openSourceC.WorldOfWarcraft
 		/// </returns>
 		public string GetArenaTeam(string realm, ArenaTeamSizeEnum teamSize, string teamName)
 		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
 			string teamSizeName = teamSize.ToString("F").Replace("Arena", string.Empty);
 			string urlPath = string.Format(ApiSettings[_apiKeyArenaTeam].Path, realm, teamSizeName, teamName);
 
-			return GetResponse(urlPath, null);
+			return GetResponse(urlPath, query.ToString());
 		}
 
 		#endregion
@@ -232,9 +243,47 @@ namespace openSourceC.WorldOfWarcraft
 		/// </returns>
 		public string GetAuctionDataHeader(string realm)
 		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
 			string urlPath = string.Format(ApiSettings[_apiKeyAuctionData].Path, realm);
 
-			return GetResponse(urlPath, null);
+			return GetResponse(urlPath, query.ToString());
+		}
+
+		#endregion
+
+		#region Character Achievements
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetCharacterAchievements"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The JSON response from <see cref="M:GetCharacterAchievements"/>.</param>
+		/// <returns>
+		///		A deserialized <see cref="List&lt;DataAchievement&gt;"/> object.
+		/// </returns>
+		public List<DataAchievement> DeserializeCharacterAchievementsResponse(string jsonResponse)
+		{
+			JavaScriptSerializer serializer = new JavaScriptSerializer();
+			DataAchievementsResponse deserializedResponse = serializer.Deserialize<DataAchievementsResponse>(jsonResponse);
+
+			return (deserializedResponse == null ? null : deserializedResponse.Achievements);
+		}
+
+		/// <summary>
+		///		Gets the character achievements.
+		/// </summary>
+		/// <returns>
+		///		A JSON formatted response string.
+		/// </returns>
+		public string GetCharacterAchievements()
+		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = ApiSettings[_apiKeyCharacterAchievements].Path;
+
+			return GetResponse(urlPath, query.ToString());
 		}
 
 		#endregion
@@ -264,9 +313,12 @@ namespace openSourceC.WorldOfWarcraft
 		/// </returns>
 		public string GetCharacterClasses()
 		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
 			string urlPath = ApiSettings[_apiKeyCharacterClasses].Path;
 
-			return GetResponse(urlPath, null);
+			return GetResponse(urlPath, query.ToString());
 		}
 
 		#endregion
@@ -306,9 +358,11 @@ namespace openSourceC.WorldOfWarcraft
 				query.AppendQueryStringPair(_fieldsQueryStringKey, fields.ToString("F").ToLower().Replace(", ", ","));
 			}
 
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
 			string urlPath = string.Format(ApiSettings[_apiKeyCharacterProfile].Path, realm, character);
 
-			return GetResponse(urlPath, query);
+			return GetResponse(urlPath, query.ToString());
 		}
 
 		#endregion
@@ -338,9 +392,47 @@ namespace openSourceC.WorldOfWarcraft
 		/// </returns>
 		public string GetCharacterRaces()
 		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
 			string urlPath = ApiSettings[_apiKeyCharacterRaces].Path;
 
-			return GetResponse(urlPath, null);
+			return GetResponse(urlPath, query.ToString());
+		}
+
+		#endregion
+
+		#region Guild Achievements
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetGuildAchievements"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The JSON response from <see cref="M:GetGuildAchievements"/>.</param>
+		/// <returns>
+		///		A deserialized <see cref="List&lt;DataAchievement&gt;"/> object.
+		/// </returns>
+		public List<DataAchievement> DeserializeGuildAchievementsResponse(string jsonResponse)
+		{
+			JavaScriptSerializer serializer = new JavaScriptSerializer();
+			DataAchievementsResponse deserializedResponse = serializer.Deserialize<DataAchievementsResponse>(jsonResponse);
+
+			return (deserializedResponse == null ? null : deserializedResponse.Achievements);
+		}
+
+		/// <summary>
+		///		Gets the guild achievements.
+		/// </summary>
+		/// <returns>
+		///		A JSON formatted response string.
+		/// </returns>
+		public string GetGuildAchievements()
+		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = ApiSettings[_apiKeyGuildAchievements].Path;
+
+			return GetResponse(urlPath, query.ToString());
 		}
 
 		#endregion
@@ -370,9 +462,12 @@ namespace openSourceC.WorldOfWarcraft
 		/// </returns>
 		public string GetGuildPerks()
 		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
 			string urlPath = ApiSettings[_apiKeyGuildPerks].Path;
 
-			return GetResponse(urlPath, null);
+			return GetResponse(urlPath, query.ToString());
 		}
 
 		#endregion
@@ -412,9 +507,11 @@ namespace openSourceC.WorldOfWarcraft
 				query.AppendQueryStringPair(_fieldsQueryStringKey, fields.ToString("F").ToLower().Replace(", ", ","));
 			}
 
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
 			string urlPath = string.Format(ApiSettings[_apiKeyGuildProfile].Path, realm, guild);
 
-			return GetResponse(urlPath, query);
+			return GetResponse(urlPath, query.ToString());
 		}
 
 		#endregion
@@ -444,9 +541,12 @@ namespace openSourceC.WorldOfWarcraft
 		/// </returns>
 		public string GetGuildRewards()
 		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
 			string urlPath = ApiSettings[_apiKeyGuildRewards].Path;
 
-			return GetResponse(urlPath, null);
+			return GetResponse(urlPath, query.ToString());
 		}
 
 		#endregion
@@ -477,9 +577,12 @@ namespace openSourceC.WorldOfWarcraft
 		/// </returns>
 		public string GetItem(int itemId)
 		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
 			string urlPath = string.Format(ApiSettings[_apiKeyItem].Path, itemId);
 
-			return GetResponse(urlPath, null);
+			return GetResponse(urlPath, query.ToString());
 		}
 
 		#endregion
@@ -509,9 +612,48 @@ namespace openSourceC.WorldOfWarcraft
 		/// </returns>
 		public string GetItemClasses()
 		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
 			string urlPath = ApiSettings[_apiKeyItemClasses].Path;
 
-			return GetResponse(urlPath, null);
+			return GetResponse(urlPath, query.ToString());
+		}
+
+		#endregion
+
+		#region Quest
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetQuest"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The JSON response from <see cref="M:GetQuest"/>.</param>
+		/// <returns>
+		///		A <see cref="T:Quest"/> object.
+		/// </returns>
+		public Quest DeserializeQuestResponse(string jsonResponse)
+		{
+			JavaScriptSerializer serializer = new JavaScriptSerializer();
+			Quest deserializedResponse = serializer.Deserialize<Quest>(jsonResponse);
+
+			return deserializedResponse;
+		}
+
+		/// <summary>
+		///		Gets the details for the specified quest.
+		/// </summary>
+		/// <param name="questId">The id of the quest to get details for.</param>
+		/// <returns>
+		///		A JSON formatted string.
+		/// </returns>
+		public string GetQuest(int questId)
+		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = string.Format(ApiSettings[_apiKeyQuest].Path, questId);
+
+			return GetResponse(urlPath, query.ToString());
 		}
 
 		#endregion
@@ -550,9 +692,11 @@ namespace openSourceC.WorldOfWarcraft
 				query.AppendQueryStringPair(_realmsQueryStringKey, realms);
 			}
 
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
 			string urlPath = ApiSettings[_apiKeyRealmStatus].Path;
 
-			return GetResponse(urlPath, query);
+			return GetResponse(urlPath, query.ToString());
 		}
 
 		/// <summary>
@@ -574,20 +718,13 @@ namespace openSourceC.WorldOfWarcraft
 
 		#region Private Methods
 
-		private string GetResponse(string urlPath, StringBuilder queryStringBuilder)
+		private string GetResponse(string urlPath, string queryString)
 		{
 			RegionElement settings = WorldOfWarcraftSection.Instance.Regions[CurrentRegionKey];
 
-			if (queryStringBuilder == null)
-			{
-				queryStringBuilder = new StringBuilder();
-			}
-
-			queryStringBuilder.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
-
 			UriBuilder requestUri = new UriBuilder(settings.Host);
 			requestUri.Path = urlPath;
-			requestUri.Query = queryStringBuilder.ToString();
+			requestUri.Query = queryString;
 
 			// Blizzard recommends using secure requests when using authorization.
 			if (UseAuthorization && requestUri.Scheme.Equals("http", StringComparison.InvariantCultureIgnoreCase))
