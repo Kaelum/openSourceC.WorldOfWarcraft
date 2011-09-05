@@ -8,7 +8,7 @@
     <ProjectGuid>{39F017F2-09AC-4F4D-99FC-5F7B7CF26CAE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>openSourceC.WorldOfWarcraft</RootNamespace>
+    <RootNamespace>openSourceC</RootNamespace>
     <AssemblyName>openSourceC.WorldOfWarcraft</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -78,71 +78,71 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enumerators.cs" />
-    <Compile Include="Extensions.cs" />
-    <Compile Include="JsonSerializationObjects\Achievement.cs" />
-    <Compile Include="JsonSerializationObjects\Achievements.cs" />
-    <Compile Include="JsonSerializationObjects\ArenaMember.cs" />
-    <Compile Include="JsonSerializationObjects\ArenaTeamResponse.cs" />
-    <Compile Include="JsonSerializationObjects\Auction.cs" />
-    <Compile Include="JsonSerializationObjects\AuctionDataFile.cs" />
-    <Compile Include="JsonSerializationObjects\AuctionDataHeaderResponse.cs" />
-    <Compile Include="JsonSerializationObjects\AuctionHouse.cs" />
-    <Compile Include="JsonSerializationObjects\BonusStats.cs" />
-    <Compile Include="JsonSerializationObjects\Boss.cs" />
-    <Compile Include="JsonSerializationObjects\Character.cs" />
-    <Compile Include="JsonSerializationObjects\CharacterAppearance.cs" />
-    <Compile Include="JsonSerializationObjects\CharacterClass.cs" />
-    <Compile Include="JsonSerializationObjects\CharacterClassesResponse.cs" />
-    <Compile Include="JsonSerializationObjects\CharacterItems.cs" />
-    <Compile Include="JsonSerializationObjects\CharacterRace.cs" />
-    <Compile Include="JsonSerializationObjects\CharacterRacesResponse.cs" />
-    <Compile Include="JsonSerializationObjects\Damage.cs" />
-    <Compile Include="JsonSerializationObjects\DataAchievement.cs" />
-    <Compile Include="JsonSerializationObjects\DataAchievementsResponse.cs" />
-    <Compile Include="JsonSerializationObjects\File.cs" />
-    <Compile Include="JsonSerializationObjects\GuildPerk.cs" />
-    <Compile Include="JsonSerializationObjects\GuildPerksResponse.cs" />
-    <Compile Include="JsonSerializationObjects\GuildReward.cs" />
-    <Compile Include="JsonSerializationObjects\GuildRewardsResponse.cs" />
-    <Compile Include="JsonSerializationObjects\ItemClass.cs" />
-    <Compile Include="JsonSerializationObjects\ItemClassesResponse.cs" />
-    <Compile Include="JsonSerializationObjects\ItemResponse.cs" />
-    <Compile Include="JsonSerializationObjects\ItemSource.cs" />
-    <Compile Include="JsonSerializationObjects\ItemSpell.cs" />
-    <Compile Include="JsonSerializationObjects\Member.cs" />
-    <Compile Include="JsonSerializationObjects\Profession.cs" />
-    <Compile Include="JsonSerializationObjects\CharacterProfessions.cs" />
-    <Compile Include="JsonSerializationObjects\CharacterProfileResponse.cs" />
-    <Compile Include="JsonSerializationObjects\CharacterProgression.cs" />
-    <Compile Include="JsonSerializationObjects\CharacterReputation.cs" />
-    <Compile Include="JsonSerializationObjects\CharacterStats.cs" />
-    <Compile Include="JsonSerializationObjects\GuildProfileResponse.cs" />
-    <Compile Include="JsonSerializationObjects\Item.cs" />
-    <Compile Include="JsonSerializationObjects\Quest.cs" />
-    <Compile Include="JsonSerializationObjects\RaidProgression.cs" />
-    <Compile Include="JsonSerializationObjects\Socket.cs" />
-    <Compile Include="JsonSerializationObjects\SocketInfo.cs" />
-    <Compile Include="JsonSerializationObjects\Spell.cs" />
-    <Compile Include="JsonSerializationObjects\TalentGlyph.cs" />
-    <Compile Include="JsonSerializationObjects\Talent.cs" />
-    <Compile Include="JsonSerializationObjects\CharacterTitle.cs" />
-    <Compile Include="JsonSerializationObjects\Emblem.cs" />
-    <Compile Include="JsonSerializationObjects\Enumerators.cs" />
-    <Compile Include="JsonSerializationObjects\ErrorResponse.cs" />
-    <Compile Include="JsonSerializationObjects\Guild.cs" />
-    <Compile Include="JsonSerializationObjects\Realm.cs" />
-    <Compile Include="JsonSerializationObjects\RealmStatusResponse.cs" />
-    <Compile Include="JsonSerializationObjects\TalentGlyphs.cs" />
-    <Compile Include="JsonSerializationObjects\TalentTree.cs" />
-    <Compile Include="JsonSerializationObjects\TooltipParameters.cs" />
-    <Compile Include="JsonSerializationObjects\WeaponInfo.cs" />
-    <Compile Include="JsonSerializationObjects\WowJavaScriptConverter.cs" />
+    <Compile Include="WorldOfWarcraftClient\Enumerators.cs" />
+    <Compile Include="WorldOfWarcraftClient\WowExtensions.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Achievement.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Achievements.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ArenaMember.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ArenaTeamResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Auction.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionDataFile.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionDataHeaderResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionHouse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BonusStats.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Boss.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Character.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterAppearance.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterClass.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterClassesResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterItems.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterRace.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterRacesResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Damage.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\DataAchievement.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\DataAchievementsResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\File.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\GuildPerk.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\GuildPerksResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\GuildReward.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\GuildRewardsResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ItemClass.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ItemClassesResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ItemResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ItemSource.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ItemSpell.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Member.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Profession.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterProfessions.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterProfileResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterProgression.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterReputation.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterStats.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\GuildProfileResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Item.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Quest.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\RaidProgression.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Socket.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\SocketInfo.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Spell.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\TalentGlyph.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Talent.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterTitle.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Emblem.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Enumerators.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ErrorResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Guild.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Realm.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\RealmStatusResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\TalentGlyphs.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\TalentTree.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\TooltipParameters.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\WeaponInfo.cs" />
+    <Compile Include="WorldOfWarcraftClient\WowJavaScriptConverter.cs" />
+    <Compile Include="WorldOfWarcraftClient\WowJavaScriptTypeResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CommunityPlatformClient.cs" />
-    <Compile Include="Configuration\WorldOfWarcraftSection.cs" />
-    <Compile Include="JsonSerializationObjects\WowJavaScriptTypeResolver.cs" />
-    <Compile Include="Exceptions\WorldOfWarcraftApiException.cs" />
+    <Compile Include="WorldOfWarcraftClient\CommunityPlatformClient.cs" />
+    <Compile Include="WorldOfWarcraft\Configuration\WorldOfWarcraftSection.cs" />
+    <Compile Include="WorldOfWarcraft\Exceptions\WorldOfWarcraftApiException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -167,6 +167,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>if exist "$(ProjectDir)..\bin\$(ConfigurationName)\$(TargetName).*" (
