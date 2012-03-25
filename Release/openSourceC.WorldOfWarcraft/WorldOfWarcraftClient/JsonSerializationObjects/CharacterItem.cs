@@ -4,12 +4,12 @@ using System.Collections.Generic;
 namespace openSourceC.WorldOfWarcraftClient
 {
 	/// <summary>
-	///		Summary description for AuctionDataHeaderResponse.
+	///		Summary description for Item.
 	/// </summary>
 	[Serializable]
-	public class AuctionDataHeaderResponse
+	public class CharacterItem : Item
 	{
 		/// <summary></summary>
-		public List<File> Files;
+		public int? TransmogItem;
 	}
 }

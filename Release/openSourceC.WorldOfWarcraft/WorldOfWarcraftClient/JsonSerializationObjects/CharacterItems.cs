@@ -16,57 +16,57 @@ namespace openSourceC.WorldOfWarcraftClient
 		public int AverageItemLevelEquipped;
 
 		/// <summary></summary>
-		public Item Head;
+		public CharacterItem Head;
 
 		/// <summary></summary>
-		public Item Neck;
+		public CharacterItem Neck;
 
 		/// <summary></summary>
-		public Item Shoulder;
+		public CharacterItem Shoulder;
 
 		/// <summary></summary>
-		public Item Back;
+		public CharacterItem Back;
 
 		/// <summary></summary>
-		public Item Chest;
+		public CharacterItem Chest;
 
 		/// <summary></summary>
-		public Item Shirt;
+		public CharacterItem Shirt;
 
 		/// <summary></summary>
-		public Item Tabard;
+		public CharacterItem Tabard;
 
 		/// <summary></summary>
-		public Item Wrist;
+		public CharacterItem Wrist;
 
 		/// <summary></summary>
-		public Item Hands;
+		public CharacterItem Hands;
 
 		/// <summary></summary>
-		public Item Waist;
+		public CharacterItem Waist;
 
 		/// <summary></summary>
-		public Item Legs;
+		public CharacterItem Legs;
 
 		/// <summary></summary>
-		public Item Feet;
+		public CharacterItem Feet;
 
 		/// <summary></summary>
-		public Item Finger1;
+		public CharacterItem Finger1;
 
 		/// <summary></summary>
-		public Item Finger2;
+		public CharacterItem Finger2;
 
 		/// <summary></summary>
-		public Item Trinket1;
+		public CharacterItem Trinket1;
 
 		/// <summary></summary>
-		public Item Trinket2;
+		public CharacterItem Trinket2;
 
 		/// <summary></summary>
-		public Item MainHand;
+		public CharacterItem MainHand;
 
 		/// <summary></summary>
-		public Item Ranged;
+		public CharacterItem Ranged;
 	}
 }
