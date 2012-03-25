@@ -5,7 +5,6 @@ namespace openSourceC.WorldOfWarcraftClient
 	/// <summary>
 	///		Summary description for ArenaTeamSizeEnum.
 	/// </summary>
-	[Flags]
 	public enum ArenaTeamSizeEnum
 	{
 		/// <summary>2v2</summary>
@@ -16,6 +15,45 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		/// <summary>5v5</summary>
 		Arena5v5 = 3,
+	}
+
+	/// <summary>
+	///		Summary description for CharacterClassEnum.
+	///		<para><b>WARNING:</b> Use at your own risk.  The enum elements are hardcoded and may
+	///		not correctly reflect the values represented, if Blizzard changes the mappings. Use
+	///		<see cref="M:GetCharacterClasses"/> to get the current mappings.</para>
+	/// </summary>
+	public enum CharacterClassEnum
+	{
+		/// <summary></summary>
+		DeathKnight = 6,
+
+		/// <summary></summary>
+		Druid = 11,
+
+		/// <summary></summary>
+		Hunter = 3,
+
+		/// <summary></summary>
+		Mage = 8,
+
+		/// <summary></summary>
+		Paladin = 2,
+
+		/// <summary></summary>
+		Priest = 5,
+
+		/// <summary></summary>
+		Rogue = 4,
+
+		/// <summary></summary>
+		Shaman = 7,
+
+		/// <summary></summary>
+		Warlock = 9,
+
+		/// <summary></summary>
+		Warrior = 1,
 	}
 
 	/// <summary>
@@ -99,6 +137,51 @@ namespace openSourceC.WorldOfWarcraftClient
 		///		A list of raids and bosses indicating raid progression and completedness.
 		///	</summary>
 		Progression = 0x1000,
+	}
+
+	/// <summary>
+	///		Summary description for CharacterRaceEnum.
+	///		<para><b>WARNING:</b> Use at your own risk.  The enum elements are hardcoded and may
+	///		not correctly reflect the values represented, if Blizzard changes the mappings. Use
+	///		<see cref="M:GetCharacterRaces"/> to get the current mappings.</para>
+	/// </summary>
+	public enum CharacterRaceEnum
+	{
+		/// <summary></summary>
+		BloodElf = 10,
+
+		/// <summary></summary>
+		Draenei = 11,
+
+		/// <summary></summary>
+		Dwarf = 3,
+
+		/// <summary></summary>
+		Gnome = 7,
+
+		/// <summary></summary>
+		Goblin = 9,
+
+		/// <summary></summary>
+		Human = 1,
+
+		/// <summary></summary>
+		NightElf = 4,
+
+		/// <summary></summary>
+		Orc = 2,
+
+		/// <summary></summary>
+		Tauren = 6,
+
+		/// <summary></summary>
+		Troll = 8,
+
+		/// <summary></summary>
+		Undead = 5,
+
+		/// <summary></summary>
+		Worgen = 22,
 	}
 
 	/// <summary>

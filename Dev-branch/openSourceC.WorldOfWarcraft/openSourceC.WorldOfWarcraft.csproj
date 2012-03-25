@@ -79,6 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="WorldOfWarcraftClient\Enumerators.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterItem.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Recipe.cs" />
     <Compile Include="WorldOfWarcraftClient\WowExtensions.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Achievement.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Achievements.cs" />
@@ -86,7 +88,7 @@
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ArenaTeamResponse.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Auction.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionDataFile.cs" />
-    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionDataHeaderResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionDataResponse.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionHouse.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BonusStats.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Boss.cs" />
@@ -100,7 +102,7 @@
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Damage.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\DataAchievement.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\DataAchievementsResponse.cs" />
-    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\File.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionData.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\GuildPerk.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\GuildPerksResponse.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\GuildReward.cs" />
@@ -172,13 +174,17 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>if exist "$(ProjectDir)..\bin\$(ConfigurationName)\$(TargetName).*" (
-attrib -R "$(ProjectDir)..\bin\$(ConfigurationName)\$(TargetName).*"
-del /Q "$(ProjectDir)..\bin\$(ConfigurationName)\$(TargetName).*"
+    <PreBuildEvent>if exist "$(ProjectDir)..\_$(OutDir)$(TargetName).*" (
+	attrib -R "$(ProjectDir)..\_$(OutDir)$(TargetName).*"
+	del /Q "$(ProjectDir)..\_$(OutDir)$(TargetName).*"
 )</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)$(TargetName).*" "$(ProjectDir)..\bin\$(ConfigurationName)\" /R /V /Q /Y</PostBuildEvent>
+    <PostBuildEvent>if not exist "$(ProjectDir)..\_$(OutDir)" (
+	md "$(ProjectDir)..\_$(OutDir)"
+)
+
+xcopy "$(TargetDir)$(TargetName).*" "$(ProjectDir)..\_$(OutDir)" /R /V /Q /Y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
