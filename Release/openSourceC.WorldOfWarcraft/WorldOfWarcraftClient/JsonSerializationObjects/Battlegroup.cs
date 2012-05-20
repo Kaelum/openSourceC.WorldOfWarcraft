@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace openSourceC.WorldOfWarcraftClient
 {
 	/// <summary>
-	///		Summary description for Quest.
+	///		Summary description for Battlegroup.
 	/// </summary>
+	[DataContract(Name = "battlegroup")]
 	[Serializable]
-	public class Recipe
+	public class Battlegroup
 	{
 		/// <summary></summary>
-		public int Id;
-
-		/// <summary></summary>
+		[DataMember(Name = "name")]
 		public string Name;
 
 		/// <summary></summary>
-		public string Profession;
-
-		/// <summary></summary>
-		public string Icon;
+		[DataMember(Name = "slug")]
+		public string Slug;
 	}
 }

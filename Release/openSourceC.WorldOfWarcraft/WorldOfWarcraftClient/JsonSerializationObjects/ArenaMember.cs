@@ -1,39 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace openSourceC.WorldOfWarcraftClient
 {
 	/// <summary>
 	///		Summary description for ArenaMember.
 	/// </summary>
+	[DataContract(Name = "arenaMember")]
 	[Serializable]
 	public class ArenaMember
 	{
 		/// <summary></summary>
-		public Character Character;
-
-		/// <summary></summary>
-		public int Rank;
-
-		/// <summary></summary>
-		public int GamesPlayed;
-
-		/// <summary></summary>
-		public int GamesWon;
-
-		/// <summary></summary>
+		[DataMember(Name = "gamesLost")]
 		public int GamesLost;
 
 		/// <summary></summary>
+		[DataMember(Name = "gamesPlayed")]
+		public int GamesPlayed;
+
+		/// <summary></summary>
+		[DataMember(Name = "gamesWon")]
+		public int GamesWon;
+
+		/// <summary></summary>
+		[DataMember(Name = "personalRating")]
+		public int PersonalRating;
+
+		/// <summary></summary>
+		[DataMember(Name = "rank")]
+		public int Rank;
+
+		/// <summary></summary>
+		[DataMember(Name = "sessionGamesPlayed")]
 		public int SessionGamesPlayed;
 
 		/// <summary></summary>
-		public int SessionGamesWon;
-
-		/// <summary></summary>
+		[DataMember(Name = "sessionGamesLost")]
 		public int SessionGamesLost;
 
 		/// <summary></summary>
-		public int PersonalRating;
+		[DataMember(Name = "sessionGamesWon")]
+		public int SessionGamesWon;
+
+
+		/// <summary></summary>
+		[DataMember(Name = "character")]
+		public Character Character;
 	}
 }
