@@ -1,49 +1,71 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Script.Serialization;
+using System.Runtime.Serialization;
 
 namespace openSourceC.WorldOfWarcraftClient
 {
 	/// <summary>
 	///		Summary description for GuildProfileResponse.
 	/// </summary>
+	[DataContract(Name = "response")]
 	[Serializable]
-	public class GuildProfileResponse
+	public class GuildProfileResponse : BaseResponse
 	{
 		/// <summary></summary>
-		public long LastModified
+		[DataMember(Name = "achievementPoints")]
+		public int AchievementPoints;
+
+		/// <summary></summary>
+		[DataMember(Name = "battlegroup")]
+		public string Battlegroup;
+
+		/// <summary>This is the <see cref="T:DateTime"/> representation of <see cref="LastModifiedValue"/></summary>
+		[IgnoreDataMember]
+		public DateTime LastModified;
+
+		/// <summary></summary>
+		[DataMember(Name = "lastModified")]
+		public long LastModifiedValue
 		{
-			get { return LastModifiedValue.ToUnixTime(); }
-			set { LastModifiedValue = value.ToDateTime(); }
+			get { return LastModified.ToUnixTime(); }
+			set { LastModified = value.ToDateTime(); }
 		}
 
-		/// <summary>This is the <see cref="T:DateTime"/> representation of <see cref="LastModified"/></summary>
-		[ScriptIgnore]
-		public DateTime LastModifiedValue { get; set; }
-
 		/// <summary></summary>
-		public string Name;
-
-		/// <summary></summary>
-		public string Realm;
-
-		/// <summary></summary>
+		[DataMember(Name = "level")]
 		public int Level;
 
 		/// <summary></summary>
-		public int Side;
+		[DataMember(Name = "name")]
+		public string Name;
 
 		/// <summary></summary>
-		public int AchievementPoints;
+		[DataMember(Name = "realm")]
+		public string Realm;
+
+		/// <summary></summary>
+		[DataMember(Name = "side")]
+		public FactionEnum Side;
 
 
 		/// <summary></summary>
-		public Achievements Achievements;
+		[DataMember(Name = "achievements")]
+		public ProfileAchievements Achievements;
 
 		/// <summary></summary>
-		public List<Member> Members;
-
-		/// <summary></summary>
+		[DataMember(Name = "emblem")]
 		public Emblem Emblem;
+
+		/// <summary></summary>
+		[IgnoreDataMember]
+		public List<GuildMember> Members;
+
+		/// <summary></summary>
+		[DataMember(Name = "members")]
+		public GuildMember[] MembersValue
+		{
+			get { return (Members == null ? null : Members.ToArray()); }
+			set { Members = (value == null ? null : new List<GuildMember>(value)); }
+		}
 	}
 }

@@ -1,61 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web.Script.Serialization;
+using System.Runtime.Serialization;
 
 namespace openSourceC.WorldOfWarcraftClient
 {
 	/// <summary>
 	///		Summary description for Character.
 	/// </summary>
+	[DataContract(Name = "character")]
 	[Serializable]
 	public class Character
 	{
 		/// <summary></summary>
-		public string Name;
-
-		/// <summary></summary>
-		public string Realm;
-
-		/// <summary></summary>
-		public int Class
-		{
-			get { return (int)ClassValue; }
-			set { ClassValue = (CharacterClassEnum)value; }
-		}
-
-		/// <summary>
-		///		This is the <see cref="T:CharacterClassEnum"/> representation of <see cref="Class"/>.
-		///		<para><b>WARNING:</b> Use at your own risk.  The enum elements are hardcoded and
-		///		may not correctly reflect the values represented, if Blizzard changes the mappings.</para>
-		///	</summary>
-		[ScriptIgnore]
-		public CharacterClassEnum ClassValue { get; set; }
-
-		/// <summary></summary>
-		public int Race
-		{
-			get { return (int)RaceValue; }
-			set { RaceValue = (CharacterRaceEnum)value; }
-		}
-
-		/// <summary>
-		///		This is the <see cref="T:CharacterRaceEnum"/> representation of <see cref="Race"/>.
-		///		<para><b>WARNING:</b> Use at your own risk.  The enum elements are hardcoded and
-		///		may not correctly reflect the values represented, if Blizzard changes the mappings.</para>
-		///	</summary>
-		[ScriptIgnore]
-		public CharacterRaceEnum RaceValue { get; set; }
-
-		/// <summary></summary>
-		public int Gender;
-
-		/// <summary></summary>
-		public int Level;
-
-		/// <summary></summary>
+		[DataMember(Name = "achievementpoints")]
 		public int AchievementPoints;
 
 		/// <summary></summary>
+		[DataMember(Name = "battlegroup")]
+		public string Battlegroup;
+
+		/// <summary></summary>
+		[DataMember(Name = "class")]
+		public CharacterClassEnum Class;
+
+		/// <summary></summary>
+		[DataMember(Name = "gender")]
+		public GenderEnum Gender;
+
+		/// <summary></summary>
+		[DataMember(Name = "level")]
+		public int Level;
+
+		/// <summary></summary>
+		[DataMember(Name = "name")]
+		public string Name;
+
+		/// <summary></summary>
+		[DataMember(Name = "race")]
+		public CharacterRaceEnum Race;
+
+		/// <summary></summary>
+		[DataMember(Name = "realm")]
+		public string Realm;
+
+		/// <summary></summary>
+		[DataMember(Name = "thumbnail")]
 		public string Thumbnail;
 	}
 }

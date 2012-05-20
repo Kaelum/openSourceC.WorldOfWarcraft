@@ -1,31 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace openSourceC.WorldOfWarcraftClient
 {
 	/// <summary>
 	///		Summary description for Talent.
 	/// </summary>
+	[DataContract(Name = "talent")]
 	[Serializable]
 	public class Talent
 	{
 		/// <summary></summary>
-		public bool Selected;
+		[DataMember(Name = "build")]
+		public string Build;
 
 		/// <summary></summary>
-		public string Name;
-
-		/// <summary></summary>
+		[DataMember(Name = "icon")]
 		public string Icon;
 
 		/// <summary></summary>
-		public string Build;
+		[DataMember(Name = "name")]
+		public string Name;
+
+		/// <summary></summary>
+		[DataMember(Name = "selected")]
+		public bool Selected;
 
 
 		/// <summary></summary>
+		[DataMember(Name = "glyphs")]
+		public TalentGlyphs Glyphs;
+
+		/// <summary></summary>
+		[IgnoreDataMember]
 		public List<TalentTree> Trees;
 
 		/// <summary></summary>
-		public TalentGlyphs Glyphs;
+		[DataMember(Name = "trees")]
+		public TalentTree[] TreesValue
+		{
+			get { return (Trees == null ? null : Trees.ToArray()); }
+			set { Trees = (value == null ? null : new List<TalentTree>(value)); }
+		}
 	}
 }

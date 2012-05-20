@@ -1,27 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace openSourceC.WorldOfWarcraftClient
 {
 	/// <summary>
 	///		Summary description for Emblem.
 	/// </summary>
+	[DataContract(Name = "emblem")]
 	[Serializable]
 	public class Emblem
 	{
 		/// <summary></summary>
-		public int Icon;
+		[DataMember(Name = "backgroundColor")]
+		public string BackgroundColor;
 
 		/// <summary></summary>
-		public string IconColor;
-
-		/// <summary></summary>
+		[DataMember(Name = "border")]
 		public int Border;
 
 		/// <summary></summary>
+		[DataMember(Name = "borderColor")]
 		public string BorderColor;
 
 		/// <summary></summary>
-		public string BackgroundColor;
+		[DataMember(Name = "icon")]
+		public int Icon;
+
+		/// <summary></summary>
+		[DataMember(Name = "iconColor")]
+		public string IconColor;
 	}
 }

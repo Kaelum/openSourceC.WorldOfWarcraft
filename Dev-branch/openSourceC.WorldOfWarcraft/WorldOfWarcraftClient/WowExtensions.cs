@@ -15,6 +15,36 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		/// <summary>
 		///		Appends a <see cref="M:HttpUtility.UrlEncode"/> encoded query-string key-value pair
+		///		with a 32-bit signed integer value to the end of the <see cref="StringBuilder"/>
+		///		object.
+		/// </summary>
+		/// <param name="stringBuilder">The <see cref="StringBuilder"/> objecy.</param>
+		/// <param name="key">The query-string key to append.</param>
+		/// <param name="value">The query-string value to append.</param>
+		internal static StringBuilder AppendQueryStringPair(this StringBuilder stringBuilder, string key, bool? value)
+		{
+			if (!value.HasValue) { return stringBuilder; }
+
+			return AppendQueryStringPair(stringBuilder, key, value.Value.ToString().ToLowerInvariant());
+		}
+
+		/// <summary>
+		///		Appends a <see cref="M:HttpUtility.UrlEncode"/> encoded query-string key-value pair
+		///		with a 32-bit signed integer value to the end of the <see cref="StringBuilder"/>
+		///		object.
+		/// </summary>
+		/// <param name="stringBuilder">The <see cref="StringBuilder"/> objecy.</param>
+		/// <param name="key">The query-string key to append.</param>
+		/// <param name="value">The query-string value to append.</param>
+		internal static StringBuilder AppendQueryStringPair(this StringBuilder stringBuilder, string key, int? value)
+		{
+			if (!value.HasValue) { return stringBuilder; }
+
+			return AppendQueryStringPair(stringBuilder, key, value.Value.ToString());
+		}
+
+		/// <summary>
+		///		Appends a <see cref="M:HttpUtility.UrlEncode"/> encoded query-string key-value pair
 		///		to the end of the <see cref="StringBuilder"/> object.
 		/// </summary>
 		/// <param name="stringBuilder">The <see cref="StringBuilder"/> objecy.</param>
@@ -25,6 +55,8 @@ namespace openSourceC.WorldOfWarcraftClient
 		/// </returns>
 		internal static StringBuilder AppendQueryStringPair(this StringBuilder stringBuilder, string key, string value)
 		{
+			if (string.IsNullOrWhiteSpace(value)) { return stringBuilder; }
+
 			if (stringBuilder.Length != 0) { stringBuilder.Append('&'); }
 
 			return stringBuilder.Append(HttpUtility.UrlEncode(key)).Append('=').Append(HttpUtility.UrlEncode(value));
