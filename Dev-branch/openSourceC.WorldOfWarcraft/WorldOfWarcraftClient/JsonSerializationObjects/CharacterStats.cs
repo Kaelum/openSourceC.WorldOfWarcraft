@@ -139,6 +139,18 @@ namespace openSourceC.WorldOfWarcraftClient
 		[DataMember(Name = "power")]
 		public int Power;
 
+		///// <summary></summary>
+		//[IgnoreDataMember]
+		//public PowerTypeEnum PowerType;
+
+		///// <summary></summary>
+		//[DataMember(Name = "powerType")]
+		//public string PowerTypeValue
+		//{
+		//	get { return PowerType.ToString().ToLowerInvariant(); }
+		//	set { PowerType = (PowerTypeEnum)Enum.Parse(typeof(PowerTypeEnum), value, true); }
+		//}
+
 		/// <summary></summary>
 		[IgnoreDataMember]
 		public PowerTypeEnum PowerType;
@@ -179,6 +191,22 @@ namespace openSourceC.WorldOfWarcraftClient
 		}
 
 		/// <summary></summary>
+		[DataMember(Name = "pvpPower")]
+		public double PvpPower;
+
+		/// <summary></summary>
+		[DataMember(Name = "pvpPowerRating")]
+		public int PvpPowerRating;
+
+		/// <summary></summary>
+		[DataMember(Name = "pvpResilience")]
+		public double PvpResilience;
+
+		/// <summary></summary>
+		[DataMember(Name = "pvpResilienceRating")]
+		public int PvpResilienceRating;
+
+		/// <summary></summary>
 		[DataMember(Name = "rangedAttackPower")]
 		public int RangedAttackPower;
 
@@ -203,6 +231,10 @@ namespace openSourceC.WorldOfWarcraftClient
 		public double RangedDps;
 
 		/// <summary></summary>
+		[DataMember(Name = "rangedExpertise")]
+		public double RangedExpertise;
+
+		/// <summary></summary>
 		[DataMember(Name = "rangedHitPercent")]
 		public double RangedHitPercent;
 
@@ -213,10 +245,6 @@ namespace openSourceC.WorldOfWarcraftClient
 		/// <summary></summary>
 		[DataMember(Name = "rangedSpeed")]
 		public double RangedSpeed;
-
-		/// <summary></summary>
-		[DataMember(Name = "resil")]
-		public int Resil;
 
 		/// <summary></summary>
 		[DataMember(Name = "spellCrit")]

@@ -20,6 +20,10 @@ namespace openSourceC.WorldOfWarcraftClient
 		public string Battlegroup;
 
 		/// <summary></summary>
+		[DataMember(Name = "calcClass")]
+		public string CalcClass;
+
+		/// <summary></summary>
 		[DataMember(Name = "class")]
 		public CharacterClassEnum Class;
 
@@ -59,7 +63,6 @@ namespace openSourceC.WorldOfWarcraftClient
 		[DataMember(Name = "thumbnail")]
 		public string Thumbnail;
 
-
 		/// <summary></summary>
 		[DataMember(Name = "achievements")]
 		public ProfileAchievements Achievements;
@@ -67,18 +70,6 @@ namespace openSourceC.WorldOfWarcraftClient
 		/// <summary></summary>
 		[DataMember(Name = "appearance")]
 		public CharacterAppearance Appearance;
-
-		/// <summary></summary>
-		[IgnoreDataMember]
-		public List<int> Companions;
-
-		/// <summary></summary>
-		[DataMember(Name = "companions")]
-		public int[] CompanionsValue
-		{
-			get { return (Companions == null ? null : Companions.ToArray()); }
-			set { Companions = (value == null ? null : new List<int>(value)); }
-		}
 
 		/// <summary></summary>
 		[IgnoreDataMember]
@@ -97,31 +88,39 @@ namespace openSourceC.WorldOfWarcraftClient
 		public Guild Guild;
 
 		/// <summary></summary>
+		[IgnoreDataMember]
+		public List<HunterPet> HunterPets;
+
+		/// <summary></summary>
+		[DataMember(Name = "hunterPets")]
+		public HunterPet[] HunterPetsValue
+		{
+			get { return (HunterPets == null ? null : HunterPets.ToArray()); }
+			set { HunterPets = (value == null ? null : new List<HunterPet>(value)); }
+		}
+
+		/// <summary></summary>
 		[DataMember(Name = "items")]
 		public CharacterItems Items;
 
 		/// <summary></summary>
-		[IgnoreDataMember]
-		public List<int> Mounts;
-
-		/// <summary></summary>
 		[DataMember(Name = "mounts")]
-		public int[] MountsValue
-		{
-			get { return (Mounts == null ? null : Mounts.ToArray()); }
-			set { Mounts = (value == null ? null : new List<int>(value)); }
-		}
-
-		/// <summary></summary>
-		[IgnoreDataMember]
-		public List<Pet> Pets;
+		public CharacterMounts Mounts;
 
 		/// <summary></summary>
 		[DataMember(Name = "pets")]
-		public Pet[] PetsValue
+		public CharacterPets Pets;
+
+		/// <summary></summary>
+		[IgnoreDataMember]
+		public List<BattlePetSlot> PetSlots;
+
+		/// <summary></summary>
+		[DataMember(Name = "petSlots")]
+		public BattlePetSlot[] PetSlotsValue
 		{
-			get { return (Pets == null ? null : Pets.ToArray()); }
-			set { Pets = (value == null ? null : new List<Pet>(value)); }
+			get { return (PetSlots == null ? null : PetSlots.ToArray()); }
+			set { PetSlots = (value == null ? null : new List<BattlePetSlot>(value)); }
 		}
 
 		/// <summary></summary>
@@ -158,14 +157,14 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		/// <summary></summary>
 		[IgnoreDataMember]
-		public List<Talent> Talents;
+		public List<TalentBuild> Talents;
 
 		/// <summary></summary>
 		[DataMember(Name = "talents")]
-		public Talent[] TalentsValue
+		public TalentBuild[] TalentsValue
 		{
 			get { return (Talents == null ? null : Talents.ToArray()); }
-			set { Talents = (value == null ? null : new List<Talent>(value)); }
+			set { Talents = (value == null ? null : new List<TalentBuild>(value)); }
 		}
 
 		/// <summary></summary>

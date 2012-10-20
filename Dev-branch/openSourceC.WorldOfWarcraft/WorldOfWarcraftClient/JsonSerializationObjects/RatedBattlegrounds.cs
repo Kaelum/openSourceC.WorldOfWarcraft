@@ -5,11 +5,11 @@ using System.Runtime.Serialization;
 namespace openSourceC.WorldOfWarcraftClient
 {
 	/// <summary>
-	///		Summary description for RatedBattleground.
+	///		Summary description for RatedBattlegrounds.
 	/// </summary>
-	[DataContract(Name = "ratedBattleground")]
+	[DataContract(Name = "ratedBattlegrounds")]
 	[Serializable]
-	public class RatedBattleground
+	public class RatedBattlegrounds
 	{
 		/// <summary></summary>
 		[DataMember(Name = "personalRating")]

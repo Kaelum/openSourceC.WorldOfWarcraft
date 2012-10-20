@@ -16,6 +16,10 @@ namespace openSourceC.WorldOfWarcraftClient
 		public string BattleGroup;
 
 		/// <summary></summary>
+		[DataMember(Name = "locale")]
+		public string Locale;
+
+		/// <summary></summary>
 		[DataMember(Name = "name")]
 		public string Name;
 
@@ -42,6 +46,10 @@ namespace openSourceC.WorldOfWarcraftClient
 		/// <summary></summary>
 		[DataMember(Name = "status")]
 		public bool Status;
+
+		/// <summary></summary>
+		[DataMember(Name = "timezone")]
+		public string Timezone;
 
 		/// <summary></summary>
 		[IgnoreDataMember]

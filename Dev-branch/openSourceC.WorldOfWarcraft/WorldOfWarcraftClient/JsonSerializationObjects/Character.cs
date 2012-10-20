@@ -28,6 +28,10 @@ namespace openSourceC.WorldOfWarcraftClient
 		public GenderEnum Gender;
 
 		/// <summary></summary>
+		[DataMember(Name = "guild")]
+		public string Guild;
+
+		/// <summary></summary>
 		[DataMember(Name = "level")]
 		public int Level;
 
@@ -42,6 +46,10 @@ namespace openSourceC.WorldOfWarcraftClient
 		/// <summary></summary>
 		[DataMember(Name = "realm")]
 		public string Realm;
+
+		/// <summary></summary>
+		[DataMember(Name = "spec")]
+		public Spec Spec;
 
 		/// <summary></summary>
 		[DataMember(Name = "thumbnail")]

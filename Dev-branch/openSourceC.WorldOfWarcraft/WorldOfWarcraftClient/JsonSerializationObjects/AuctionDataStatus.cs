@@ -5,11 +5,11 @@ using System.Runtime.Serialization;
 namespace openSourceC.WorldOfWarcraftClient
 {
 	/// <summary>
-	///		Summary description for AuctionDataHeader.
+	///		Summary description for AuctionDataStatus.
 	/// </summary>
-	[DataContract(Name = "auctionDataHeader")]
+	[DataContract(Name = "auctionDataStatus")]
 	[Serializable]
-	public class AuctionDataHeader
+	public class AuctionDataStatus
 	{
 		/// <summary></summary>
 		[DataMember(Name = "url")]

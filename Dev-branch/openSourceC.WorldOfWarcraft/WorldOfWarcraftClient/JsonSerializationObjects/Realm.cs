@@ -16,11 +16,19 @@ namespace openSourceC.WorldOfWarcraftClient
 		public string Battlegroup;
 
 		/// <summary></summary>
+		[DataMember(Name = "locale")]
+		public string Locale;
+
+		/// <summary></summary>
 		[DataMember(Name = "name")]
 		public string Name;
 
 		/// <summary></summary>
 		[DataMember(Name = "slug")]
 		public string Slug;
+
+		/// <summary></summary>
+		[DataMember(Name = "timezone")]
+		public string TimeZone;
 	}
 }

@@ -16,12 +16,16 @@ namespace openSourceC.WorldOfWarcraftClient
 		public bool FeatOfStrength;
 
 		/// <summary></summary>
+		[DataMember(Name = "itemId")]
+		public int? ItemId;
+
+		/// <summary></summary>
 		[DataMember(Name = "name")]
 		public string Name;
 
 		/// <summary></summary>
 		[DataMember(Name = "quantity")]
-		public int Quantity;
+		public int? Quantity;
 
 		/// <summary>This is the <see cref="T:DateTime"/> representation of <see cref="TimestampValue"/></summary>
 		[IgnoreDataMember]
@@ -45,15 +49,7 @@ namespace openSourceC.WorldOfWarcraftClient
 		public CharacterFeedAchievement Achievement;
 
 		/// <summary></summary>
-		[IgnoreDataMember]
-		public List<Criteria> Criteria;
-
-		/// <summary></summary>
 		[DataMember(Name = "criteria")]
-		public Criteria[] CriteriaValue
-		{
-			get { return (Criteria == null ? null : Criteria.ToArray()); }
-			set { Criteria = (value == null ? null : new List<Criteria>(value)); }
-		}
+		public Criteria Criteria;
 	}
 }

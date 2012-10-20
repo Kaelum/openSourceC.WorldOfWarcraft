@@ -25,14 +25,14 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		/// <summary></summary>
 		[IgnoreDataMember]
-		public FactionEnum Side;
+		public CharacterFactionEnum Side;
 
 		/// <summary></summary>
 		[DataMember(Name = "side")]
 		public string SideValue
 		{
 			get { return Side.ToString().ToLowerInvariant(); }
-			set { Side = (FactionEnum)Enum.Parse(typeof(FactionEnum), value, true); }
+			set { Side = (CharacterFactionEnum)Enum.Parse(typeof(CharacterFactionEnum), value, true); }
 		}
 	}
 }

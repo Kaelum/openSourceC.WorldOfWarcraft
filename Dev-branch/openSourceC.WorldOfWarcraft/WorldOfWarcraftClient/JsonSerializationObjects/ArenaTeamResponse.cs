@@ -73,8 +73,16 @@ namespace openSourceC.WorldOfWarcraftClient
 		public int SessionGamesWon;
 
 		/// <summary></summary>
+		[IgnoreDataMember]
+		public FactionEnum Side;
+
+		/// <summary></summary>
 		[DataMember(Name = "side")]
-		public string Side;
+		public string SideValue
+		{
+			get { return Side.ToString().ToLowerInvariant(); }
+			set { Side = (FactionEnum)Enum.Parse(typeof(FactionEnum), value, true); }
+		}
 
 		/// <summary></summary>
 		[DataMember(Name = "teamSize")]

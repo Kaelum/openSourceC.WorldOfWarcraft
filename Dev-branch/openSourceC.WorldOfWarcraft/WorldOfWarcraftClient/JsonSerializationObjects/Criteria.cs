@@ -18,5 +18,13 @@ namespace openSourceC.WorldOfWarcraftClient
 		/// <summary></summary>
 		[DataMember(Name = "id")]
 		public int Id;
+
+		/// <summary></summary>
+		[DataMember(Name = "max")]
+		public int Max;
+
+		/// <summary></summary>
+		[DataMember(Name = "orderIndex")]
+		public int OrderIndex;
 	}
 }

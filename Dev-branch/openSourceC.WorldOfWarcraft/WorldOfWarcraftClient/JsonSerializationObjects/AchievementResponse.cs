@@ -12,6 +12,10 @@ namespace openSourceC.WorldOfWarcraftClient
 	public class AchievementResponse : BaseResponse
 	{
 		/// <summary></summary>
+		[DataMember(Name = "accountWide")]
+		public bool AccountWide;
+
+		/// <summary></summary>
 		[DataMember(Name = "description")]
 		public string Description;
 

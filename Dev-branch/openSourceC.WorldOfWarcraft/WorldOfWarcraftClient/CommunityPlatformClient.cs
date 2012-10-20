@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
-using System.Text;
-using System.Web;
+using System.Reflection;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
+using System.Text;
 
 using openSourceC.WorldOfWarcraft;
-using System.IO.Compression;
-using System.Runtime.Serialization.Json;
-using System.Xml;
 
 namespace openSourceC.WorldOfWarcraftClient
 {
@@ -24,14 +23,19 @@ namespace openSourceC.WorldOfWarcraftClient
 		private const string _apiKeyArenaLadder = "arenaLadder";
 		private const string _apiKeyArenaTeam = "arenaTeam";
 		private const string _apiKeyAuctionData = "auctionData";
+		private const string _apiKeyBattlePetAbility = "battlePetAbility";
+		private const string _apiKeyBattlePetSpecies = "battlePetSpecies";
+		private const string _apiKeyBattlePetStats = "battlePetStats";
 		private const string _apiKeyCharacterProfile = "characterProfile";
 		private const string _apiKeyGuildProfile = "guildProfile";
 		private const string _apiKeyItem = "item";
 		private const string _apiKeyItemSet = "itemSet";
 		private const string _apiKeyQuest = "quest";
 		private const string _apiKeyRatedBattlegroundLadder = "ratedBattlegroundLadder";
+		private const string _apiKeyRealmChallenge = "realmChallenge";
 		private const string _apiKeyRealmStatus = "realmStatus";
 		private const string _apiKeyRecipe = "recipe";
+		private const string _apiKeySpell = "spell";
 
 		// Data Resource API Keys
 		private const string _apiKeyBattlegroups = "battlegroups";
@@ -42,9 +46,14 @@ namespace openSourceC.WorldOfWarcraftClient
 		private const string _apiKeyGuildPerks = "guildPerks";
 		private const string _apiKeyGuildRewards = "guildRewards";
 		private const string _apiKeyItemClasses = "itemClasses";
+		private const string _apiKeyPetTypes = "petTypes";
+		private const string _apiKeyTalents = "talents";
 
+		private const string _breedIdQueryStringKey = "breedId";
 		private const string _fieldsQueryStringKey = "fields";
+		private const string _levelQueryStringKey = "level";
 		private const string _localeQueryStringKey = "locale";
+		private const string _qualityIdQueryStringKey = "qualityId";
 		private const string _realmsQueryStringKey = "realms";
 
 		private string _currentRegionKey;
@@ -169,7 +178,7 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		#region API Methods
 
-		#region Item
+		#region Achievement API
 
 		/// <summary>
 		///		Deserializes the JSON response from <see cref="M:GetAchievementRaw"/>.
@@ -222,7 +231,627 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		#endregion
 
-		#region Arena Ladder
+		#region Auction API
+
+		#region Data File
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetAuctionDataFileRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:AuctionDataFileResponse"/> object.
+		/// </returns>
+		public AuctionDataFileResponse DeserializeAuctionDataFile(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(AuctionDataFileResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				AuctionDataFileResponse deserializedResponse = (AuctionDataFileResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the auction data file at the specified url.
+		/// </summary>
+		/// <param name="url">The url of the file.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:AuctionDataFileResponse"/> object.
+		/// </returns>
+		public AuctionDataFileResponse GetAuctionDataFile(string url)
+		{
+			return DeserializeAuctionDataFile(GetAuctionDataFileRaw(url));
+		}
+
+		/// <summary>
+		///		Gets the raw auction data file at the specified url.
+		/// </summary>
+		/// <param name="url">The url of the file.</param>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetAuctionDataFileRaw(string url)
+		{
+			return GetFile(url);
+		}
+
+		#endregion
+
+		#region Data Status
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetAuctionDataStatusRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:AuctionDataStatusResponse"/> object.
+		/// </returns>
+		public AuctionDataStatusResponse DeserializeAuctionDataStatusResponse(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(AuctionDataStatusResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				AuctionDataStatusResponse deserializedResponse = (AuctionDataStatusResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the auction house data header for the specified realm.
+		/// </summary>
+		/// <param name="realm">The realm to receive auction house data for.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:AuctionDataStatusResponse"/> object.
+		/// </returns>
+		public AuctionDataStatusResponse GetAuctionDataStatus(string realm)
+		{
+			return DeserializeAuctionDataStatusResponse(GetAuctionDataStatusRaw(realm));
+		}
+
+		/// <summary>
+		///		Gets the raw auction house data header for the specified realm.
+		/// </summary>
+		/// <param name="realm">The realm to receive auction house data for.</param>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetAuctionDataStatusRaw(string realm)
+		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = string.Format(ApiSettings[_apiKeyAuctionData].Path, realm);
+
+			return GetResponse(urlPath, query.ToString());
+		}
+
+		#endregion
+
+		#endregion
+
+		#region BattlePet API
+
+		#region Ability
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetBattlePetAbilityRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:BattlePetAbilityResponse"/> object.
+		/// </returns>
+		public BattlePetAbilityResponse DeserializeBattlePetAbilityResponse(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(BattlePetAbilityResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				BattlePetAbilityResponse deserializedResponse = (BattlePetAbilityResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the profile of the specified character on the specified realm.
+		/// </summary>
+		/// <param name="abilityId">The identifier of the ability.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:BattlePetAbilityResponse"/> object.
+		/// </returns>
+		public BattlePetAbilityResponse GetBattlePetAbility(int abilityId)
+		{
+			return DeserializeBattlePetAbilityResponse(GetBattlePetAbilityRaw(abilityId));
+		}
+
+		/// <summary>
+		///		Gets the raw response for the profile of the specified character on the specified realm.
+		/// </summary>
+		/// <param name="abilityId">The identifier of the ability.</param>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetBattlePetAbilityRaw(int abilityId)
+		{
+			StringBuilder query = new StringBuilder();
+
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = string.Format(ApiSettings[_apiKeyBattlePetAbility].Path, abilityId);
+
+			return GetResponse(urlPath, query.ToString());
+		}
+
+		#endregion
+
+		#region Species
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetBattlePetSpeciesRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:BattlePetSpeciesResponse"/> object.
+		/// </returns>
+		public BattlePetSpeciesResponse DeserializeBattlePetSpeciesResponse(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(BattlePetSpeciesResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				BattlePetSpeciesResponse deserializedResponse = (BattlePetSpeciesResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the profile of the specified character on the specified realm.
+		/// </summary>
+		/// <param name="speciesId">The identifier of the species.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:BattlePetSpeciesResponse"/> object.
+		/// </returns>
+		public BattlePetSpeciesResponse GetBattlePetSpecies(int speciesId)
+		{
+			return DeserializeBattlePetSpeciesResponse(GetBattlePetSpeciesRaw(speciesId));
+		}
+
+		/// <summary>
+		///		Gets the raw response for the profile of the specified character on the specified realm.
+		/// </summary>
+		/// <param name="speciesId">The identifier of the species.</param>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetBattlePetSpeciesRaw(int speciesId)
+		{
+			StringBuilder query = new StringBuilder();
+			string responseString;
+
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = string.Format(ApiSettings[_apiKeyBattlePetSpecies].Path, speciesId);
+
+			return (responseString = GetResponse(urlPath, query.ToString()));
+		}
+
+		#endregion
+
+		#region Stats
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetBattlePetStatsRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:BattlePetStatsResponse"/> object.
+		/// </returns>
+		public BattlePetStatsResponse DeserializeBattlePetStatsResponse(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(BattlePetStatsResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				BattlePetStatsResponse deserializedResponse = (BattlePetStatsResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the profile of the specified character on the specified realm.
+		/// </summary>
+		/// <param name="speciesId">The identifier of the species.</param>
+		/// <param name="level">The Pet's level. (optional, default = 1)</param>
+		/// <param name="breedId">The Pet's breed (can be retrieved from the character profile
+		///		api). (optional, default = 3)</param>
+		/// <param name="qualityId">The Pet's quality (can be retrieved from the character profile
+		///		api). (optional, default = 1)</param>
+		/// <returns>
+		///		A deserialized <see cref="T:BattlePetStatsResponse"/> object.
+		/// </returns>
+		public BattlePetStatsResponse GetBattlePetStats(int speciesId, int? level = null, int? breedId = null, int? qualityId = null)
+		{
+			return DeserializeBattlePetStatsResponse(GetBattlePetStatsRaw(speciesId, level, breedId, qualityId));
+		}
+
+		/// <summary>
+		///		Gets the raw response for the profile of the specified character on the specified realm.
+		/// </summary>
+		/// <param name="speciesId">The identifier of the species.</param>
+		/// <param name="level">The Pet's level. (optional, default = 1)</param>
+		/// <param name="breedId">The Pet's breed (can be retrieved from the character profile
+		///		api). (optional, default = 3)</param>
+		/// <param name="qualityId">The Pet's quality (can be retrieved from the character profile
+		///		api). (optional, default = 1)</param>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetBattlePetStatsRaw(int speciesId, int? level = null, int? breedId = null, int? qualityId = null)
+		{
+			StringBuilder query = new StringBuilder();
+
+			query.AppendQueryStringPair(_levelQueryStringKey, level);
+			query.AppendQueryStringPair(_breedIdQueryStringKey, breedId);
+			query.AppendQueryStringPair(_qualityIdQueryStringKey, qualityId);
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = string.Format(ApiSettings[_apiKeyBattlePetStats].Path, speciesId);
+
+			return GetResponse(urlPath, query.ToString());
+		}
+
+		#endregion
+
+		#endregion
+
+		#region Challenge Mode API
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetRealmChallengeRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A deserialized <see cref="RealmChallengeResponse"/> object.
+		/// </returns>
+		public RealmChallengeResponse DeserializeRealmChallengeResponse(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(RealmChallengeResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				RealmChallengeResponse deserializedResponse = (RealmChallengeResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the leaderboard for the specified realm.
+		/// </summary>
+		/// <param name="realm">The realm to retrieve.</param>
+		/// <returns>
+		///		A deserialized <see cref="RealmChallengeResponse"/> object.
+		/// </returns>
+		public RealmChallengeResponse GetRealmChallenge(string realm)
+		{
+			return DeserializeRealmChallengeResponse(GetRealmChallengeRaw(realm));
+		}
+
+		/// <summary>
+		///		Gets the raw response for the leaderboard of the specified realms.
+		/// </summary>
+		/// <param name="realm">The realm to retrieve.</param>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetRealmChallengeRaw(string realm)
+		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = string.Format(ApiSettings[_apiKeyRealmChallenge].Path, realm);
+
+			return GetResponse(urlPath, query.ToString());
+		}
+
+		#endregion
+
+		#region Character Profile API
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetCharacterProfileRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:CharacterProfileResponse"/> object.
+		/// </returns>
+		public CharacterProfileResponse DeserializeCharacterProfileResponse(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(CharacterProfileResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				CharacterProfileResponse deserializedResponse = (CharacterProfileResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the profile of the specified character on the specified realm.
+		/// </summary>
+		/// <param name="realm">The realm that the character is on.</param>
+		/// <param name="character">The name of the character.</param>
+		/// <param name="fields">A bitwise combination of the enumeration values.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:CharacterProfileResponse"/> object.
+		/// </returns>
+		public CharacterProfileResponse GetCharacterProfile(string realm, string character, CharacterProfileOptionalFieldsEnum fields)
+		{
+			return DeserializeCharacterProfileResponse(GetCharacterProfileRaw(realm, character, fields));
+		}
+
+		/// <summary>
+		///		Gets the raw response for the profile of the specified character on the specified realm.
+		/// </summary>
+		/// <param name="realm">The realm that the character is on.</param>
+		/// <param name="character">The name of the character.</param>
+		/// <param name="fields">A bitwise combination of the enumeration values.</param>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetCharacterProfileRaw(string realm, string character, CharacterProfileOptionalFieldsEnum fields)
+		{
+			string response;
+			StringBuilder query = new StringBuilder();
+
+			if (fields != CharacterProfileOptionalFieldsEnum.None)
+			{
+				StringBuilder flags = new StringBuilder();
+
+				foreach (string flag in Enum.GetNames(typeof(CharacterProfileOptionalFieldsEnum)))
+				{
+					if (flag.Equals("None", StringComparison.InvariantCultureIgnoreCase) || flag.Equals("All", StringComparison.InvariantCultureIgnoreCase)) { continue; }
+
+					CharacterProfileOptionalFieldsEnum flagValue = (CharacterProfileOptionalFieldsEnum)Enum.Parse(typeof(CharacterProfileOptionalFieldsEnum), flag);
+
+					if (fields.HasFlag(flagValue))
+					{
+						if (flags.Length > 0) { flags.Append(","); }
+
+						MemberInfo memberInfo = typeof(CharacterProfileOptionalFieldsEnum).GetMember(flag)[0];
+						EnumMemberAttribute attribute = (EnumMemberAttribute)memberInfo.GetCustomAttributes(typeof(EnumMemberAttribute), true)[0];
+
+						flags.Append(attribute.Value);
+					}
+				}
+
+				query.AppendQueryStringPair(_fieldsQueryStringKey, flags.ToString());
+			}
+
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = string.Format(ApiSettings[_apiKeyCharacterProfile].Path, realm, character);
+
+			return (response = GetResponse(urlPath, query.ToString()));
+		}
+
+		#endregion
+
+		#region Guild Profile API
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetGuildProfileRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:GuildProfileResponse"/> object.
+		/// </returns>
+		public GuildProfileResponse DeserializeGuildProfileResponse(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(GuildProfileResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				GuildProfileResponse deserializedResponse = (GuildProfileResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the profile of the specified guild on the specified realm.
+		/// </summary>
+		/// <param name="realm">The realm that the guild is on.</param>
+		/// <param name="guild">The name of the guild.</param>
+		/// <param name="fields">A bitwise combination of the enumeration values.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:GuildProfileResponse"/> object.
+		/// </returns>
+		public GuildProfileResponse GetGuildProfile(string realm, string guild, GuildProfileOptionalFieldsEnum fields)
+		{
+			return DeserializeGuildProfileResponse(GetGuildProfileRaw(realm, guild, fields));
+		}
+
+		/// <summary>
+		///		Gets the raw response for the profile of the specified guild on the specified realm.
+		/// </summary>
+		/// <param name="realm">The realm that the guild is on.</param>
+		/// <param name="guild">The name of the guild.</param>
+		/// <param name="fields">A bitwise combination of the enumeration values.</param>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetGuildProfileRaw(string realm, string guild, GuildProfileOptionalFieldsEnum fields)
+		{
+			string response;
+			StringBuilder query = new StringBuilder();
+
+			if (fields != GuildProfileOptionalFieldsEnum.None)
+			{
+				StringBuilder flags = new StringBuilder();
+
+				foreach (string flag in Enum.GetNames(typeof(GuildProfileOptionalFieldsEnum)))
+				{
+					if (flag.Equals("None", StringComparison.InvariantCultureIgnoreCase) || flag.Equals("All", StringComparison.InvariantCultureIgnoreCase)) { continue; }
+
+					GuildProfileOptionalFieldsEnum flagValue = (GuildProfileOptionalFieldsEnum)Enum.Parse(typeof(GuildProfileOptionalFieldsEnum), flag);
+
+					if (fields.HasFlag(flagValue))
+					{
+						if (flags.Length > 0) { flags.Append(","); }
+
+						MemberInfo memberInfo = typeof(GuildProfileOptionalFieldsEnum).GetMember(flag)[0];
+						EnumMemberAttribute attribute = (EnumMemberAttribute)memberInfo.GetCustomAttributes(typeof(EnumMemberAttribute), true)[0];
+
+						flags.Append(attribute.Value);
+					}
+				}
+
+				query.AppendQueryStringPair(_fieldsQueryStringKey, flags.ToString());
+			}
+
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = string.Format(ApiSettings[_apiKeyGuildProfile].Path, realm, guild);
+
+			return (response = GetResponse(urlPath, query.ToString()));
+		}
+
+		#endregion
+
+		#region Item API
+
+		#region Individual Item
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetItemRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A <see cref="T:ItemResponse"/> object.
+		/// </returns>
+		public ItemResponse DeserializeItemResponse(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ItemResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				ItemResponse deserializedResponse = (ItemResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the details of the specified item.
+		/// </summary>
+		/// <param name="itemId">The id of the item to get details for.</param>
+		/// <returns>
+		///		A <see cref="T:ItemResponse"/> object.
+		/// </returns>
+		public ItemResponse GetItem(int itemId)
+		{
+			return DeserializeItemResponse(GetItemRaw(itemId));
+		}
+
+		/// <summary>
+		///		Gets the raw response for the details of the specified item.
+		/// </summary>
+		/// <param name="itemId">The id of the item to get details for.</param>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetItemRaw(int itemId)
+		{
+			string returnValue;
+
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = string.Format(ApiSettings[_apiKeyItem].Path, itemId);
+
+			return (returnValue = GetResponse(urlPath, query.ToString()));
+		}
+
+		#endregion
+
+		#region Item Set
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetItemRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A <see cref="T:ItemSetResponse"/> object.
+		/// </returns>
+		public ItemSetResponse DeserializeItemSetResponse(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ItemSetResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				ItemSetResponse deserializedResponse = (ItemSetResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the details of the specified item set.
+		/// </summary>
+		/// <param name="setId">The id of the item set to get details for.</param>
+		/// <returns>
+		///		A <see cref="T:ItemSetResponse"/> object.
+		/// </returns>
+		public ItemSetResponse GetItemSet(int setId)
+		{
+			return DeserializeItemSetResponse(GetItemSetRaw(setId));
+		}
+
+		/// <summary>
+		///		Gets the raw response for the details of the specified item set.
+		/// </summary>
+		/// <param name="setId">The id of the item set to get details for.</param>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetItemSetRaw(int setId)
+		{
+			string returnValue;
+
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = string.Format(ApiSettings[_apiKeyItemSet].Path, setId);
+
+			return (returnValue = GetResponse(urlPath, query.ToString()));
+		}
+
+		#endregion
+
+		#endregion
+
+		#region PVP API
+
+		#region Arena Ladder API
 
 		/// <summary>
 		///		Deserializes the JSON response from <see cref="M:GetArenaLadderRaw"/>.
@@ -289,7 +918,7 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		#endregion
 
-		#region Arena Team
+		#region Arena Team API
 
 		/// <summary>
 		///		Deserializes the JSON response from <see cref="M:GetArenaTeamRaw"/>.
@@ -347,393 +976,7 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		#endregion
 
-		#region Auction Data File
-
-		/// <summary>
-		///		Deserializes the JSON response from <see cref="M:GetAuctionDataFileRaw"/>.
-		/// </summary>
-		/// <param name="jsonResponse">The string to deserialize.</param>
-		/// <returns>
-		///		A deserialized <see cref="T:AuctionDataFileResponse"/> object.
-		/// </returns>
-		public AuctionDataFileResponse DeserializeAuctionDataFile(string jsonResponse)
-		{
-			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(AuctionDataFileResponse));
-
-			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
-			{
-				AuctionDataFileResponse deserializedResponse = (AuctionDataFileResponse)serializer.ReadObject(stream);
-				deserializedResponse.JsonResponse = jsonResponse;
-
-				return deserializedResponse;
-			}
-		}
-
-		/// <summary>
-		///		Gets the auction data file at the specified url.
-		/// </summary>
-		/// <param name="url">The url of the file.</param>
-		/// <returns>
-		///		A deserialized <see cref="T:AuctionDataFileResponse"/> object.
-		/// </returns>
-		public AuctionDataFileResponse GetAuctionDataFile(string url)
-		{
-			return DeserializeAuctionDataFile(GetAuctionDataFileRaw(url));
-		}
-
-		/// <summary>
-		///		Gets the raw auction data file at the specified url.
-		/// </summary>
-		/// <param name="url">The url of the file.</param>
-		/// <returns>
-		///		The JSON response returned from the API call.
-		/// </returns>
-		public string GetAuctionDataFileRaw(string url)
-		{
-			return GetFile(url);
-		}
-
-		#endregion
-
-		#region Auction Data Header
-
-		/// <summary>
-		///		Deserializes the JSON response from <see cref="M:GetAuctionDataHeaderRaw"/>.
-		/// </summary>
-		/// <param name="jsonResponse">The string to deserialize.</param>
-		/// <returns>
-		///		A deserialized <see cref="T:AuctionDataHeaderResponse"/> object.
-		/// </returns>
-		public AuctionDataHeaderResponse DeserializeAuctionDataHeaderResponse(string jsonResponse)
-		{
-			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(AuctionDataHeaderResponse));
-
-			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
-			{
-				AuctionDataHeaderResponse deserializedResponse = (AuctionDataHeaderResponse)serializer.ReadObject(stream);
-				deserializedResponse.JsonResponse = jsonResponse;
-
-				return deserializedResponse;
-			}
-		}
-
-		/// <summary>
-		///		Gets the auction house data header for the specified realm.
-		/// </summary>
-		/// <param name="realm">The realm to receive auction house data for.</param>
-		/// <returns>
-		///		A deserialized <see cref="T:AuctionDataHeaderResponse"/> object.
-		/// </returns>
-		public AuctionDataHeaderResponse GetAuctionDataHeader(string realm)
-		{
-			return DeserializeAuctionDataHeaderResponse(GetAuctionDataHeaderRaw(realm));
-		}
-
-		/// <summary>
-		///		Gets the raw auction house data header for the specified realm.
-		/// </summary>
-		/// <param name="realm">The realm to receive auction house data for.</param>
-		/// <returns>
-		///		The JSON response returned from the API call.
-		/// </returns>
-		public string GetAuctionDataHeaderRaw(string realm)
-		{
-			StringBuilder query = new StringBuilder();
-			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
-
-			string urlPath = string.Format(ApiSettings[_apiKeyAuctionData].Path, realm);
-
-			return GetResponse(urlPath, query.ToString());
-		}
-
-		#endregion
-
-		#region Character Profile
-
-		/// <summary>
-		///		Deserializes the JSON response from <see cref="M:GetCharacterProfileRaw"/>.
-		/// </summary>
-		/// <param name="jsonResponse">The string to deserialize.</param>
-		/// <returns>
-		///		A deserialized <see cref="T:CharacterProfileResponse"/> object.
-		/// </returns>
-		public CharacterProfileResponse DeserializeCharacterProfileResponse(string jsonResponse)
-		{
-			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(CharacterProfileResponse));
-
-			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
-			{
-				CharacterProfileResponse deserializedResponse = (CharacterProfileResponse)serializer.ReadObject(stream);
-				deserializedResponse.JsonResponse = jsonResponse;
-
-				return deserializedResponse;
-			}
-		}
-
-		/// <summary>
-		///		Gets the profile of the specified character on the specified realm.
-		/// </summary>
-		/// <param name="realm">The realm that the character is on.</param>
-		/// <param name="character">The name of the character.</param>
-		/// <param name="fields">A bitwise combination of the enumeration values.</param>
-		/// <returns>
-		///		A deserialized <see cref="T:CharacterProfileResponse"/> object.
-		/// </returns>
-		public CharacterProfileResponse GetCharacterProfile(string realm, string character, CharacterProfileOptionalFieldsEnum fields)
-		{
-			return DeserializeCharacterProfileResponse(GetCharacterProfileRaw(realm, character, fields));
-		}
-
-		/// <summary>
-		///		Gets the raw response for the profile of the specified character on the specified realm.
-		/// </summary>
-		/// <param name="realm">The realm that the character is on.</param>
-		/// <param name="character">The name of the character.</param>
-		/// <param name="fields">A bitwise combination of the enumeration values.</param>
-		/// <returns>
-		///		The JSON response returned from the API call.
-		/// </returns>
-		public string GetCharacterProfileRaw(string realm, string character, CharacterProfileOptionalFieldsEnum fields)
-		{
-			StringBuilder query = new StringBuilder();
-
-			if (fields != CharacterProfileOptionalFieldsEnum.None)
-			{
-				query.AppendQueryStringPair(_fieldsQueryStringKey, fields.ToString("F").ToLower().Replace(", ", ","));
-			}
-
-			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
-
-			string urlPath = string.Format(ApiSettings[_apiKeyCharacterProfile].Path, realm, character);
-
-			return GetResponse(urlPath, query.ToString());
-		}
-
-		#endregion
-
-		#region Guild Profile
-
-		/// <summary>
-		///		Deserializes the JSON response from <see cref="M:GetGuildProfileRaw"/>.
-		/// </summary>
-		/// <param name="jsonResponse">The string to deserialize.</param>
-		/// <returns>
-		///		A deserialized <see cref="T:GuildProfileResponse"/> object.
-		/// </returns>
-		public GuildProfileResponse DeserializeGuildProfileResponse(string jsonResponse)
-		{
-			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(GuildProfileResponse));
-
-			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
-			{
-				GuildProfileResponse deserializedResponse = (GuildProfileResponse)serializer.ReadObject(stream);
-				deserializedResponse.JsonResponse = jsonResponse;
-
-				return deserializedResponse;
-			}
-		}
-
-		/// <summary>
-		///		Gets the profile of the specified guild on the specified realm.
-		/// </summary>
-		/// <param name="realm">The realm that the guild is on.</param>
-		/// <param name="guild">The name of the guild.</param>
-		/// <param name="fields">A bitwise combination of the enumeration values.</param>
-		/// <returns>
-		///		A deserialized <see cref="T:GuildProfileResponse"/> object.
-		/// </returns>
-		public GuildProfileResponse GetGuildProfile(string realm, string guild, GuildProfileOptionalFieldsEnum fields)
-		{
-			return DeserializeGuildProfileResponse(GetGuildProfileRaw(realm, guild, fields));
-		}
-
-		/// <summary>
-		///		Gets the raw response for the profile of the specified guild on the specified realm.
-		/// </summary>
-		/// <param name="realm">The realm that the guild is on.</param>
-		/// <param name="guild">The name of the guild.</param>
-		/// <param name="fields">A bitwise combination of the enumeration values.</param>
-		/// <returns>
-		///		The JSON response returned from the API call.
-		/// </returns>
-		public string GetGuildProfileRaw(string realm, string guild, GuildProfileOptionalFieldsEnum fields)
-		{
-			StringBuilder query = new StringBuilder();
-
-			if (fields != GuildProfileOptionalFieldsEnum.None)
-			{
-				query.AppendQueryStringPair(_fieldsQueryStringKey, fields.ToString("F").ToLower().Replace(", ", ","));
-			}
-
-			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
-
-			string urlPath = string.Format(ApiSettings[_apiKeyGuildProfile].Path, realm, guild);
-
-			return GetResponse(urlPath, query.ToString());
-		}
-
-		#endregion
-
-		#region Item
-
-		/// <summary>
-		///		Deserializes the JSON response from <see cref="M:GetItemRaw"/>.
-		/// </summary>
-		/// <param name="jsonResponse">The string to deserialize.</param>
-		/// <returns>
-		///		A <see cref="T:ItemResponse"/> object.
-		/// </returns>
-		public ItemResponse DeserializeItemResponse(string jsonResponse)
-		{
-			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ItemResponse));
-
-			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
-			{
-				ItemResponse deserializedResponse = (ItemResponse)serializer.ReadObject(stream);
-				deserializedResponse.JsonResponse = jsonResponse;
-
-				return deserializedResponse;
-			}
-		}
-
-		/// <summary>
-		///		Gets the details of the specified item.
-		/// </summary>
-		/// <param name="itemId">The id of the item to get details for.</param>
-		/// <returns>
-		///		A <see cref="T:ItemResponse"/> object.
-		/// </returns>
-		public ItemResponse GetItem(int itemId)
-		{
-			return DeserializeItemResponse(GetItemRaw(itemId));
-		}
-
-		/// <summary>
-		///		Gets the raw response for the details of the specified item.
-		/// </summary>
-		/// <param name="itemId">The id of the item to get details for.</param>
-		/// <returns>
-		///		The JSON response returned from the API call.
-		/// </returns>
-		public string GetItemRaw(int itemId)
-		{
-			StringBuilder query = new StringBuilder();
-			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
-
-			string urlPath = string.Format(ApiSettings[_apiKeyItem].Path, itemId);
-
-			return GetResponse(urlPath, query.ToString());
-		}
-
-		#endregion
-
-		#region Item Set
-
-		/// <summary>
-		///		Deserializes the JSON response from <see cref="M:GetItemRaw"/>.
-		/// </summary>
-		/// <param name="jsonResponse">The string to deserialize.</param>
-		/// <returns>
-		///		A <see cref="T:ItemSetResponse"/> object.
-		/// </returns>
-		public ItemSetResponse DeserializeItemSetResponse(string jsonResponse)
-		{
-			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ItemSetResponse));
-
-			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
-			{
-				ItemSetResponse deserializedResponse = (ItemSetResponse)serializer.ReadObject(stream);
-				deserializedResponse.JsonResponse = jsonResponse;
-
-				return deserializedResponse;
-			}
-		}
-
-		/// <summary>
-		///		Gets the details of the specified item set.
-		/// </summary>
-		/// <param name="setId">The id of the item set to get details for.</param>
-		/// <returns>
-		///		A <see cref="T:ItemSetResponse"/> object.
-		/// </returns>
-		public ItemSetResponse GetItemSet(int setId)
-		{
-			return DeserializeItemSetResponse(GetItemSetRaw(setId));
-		}
-
-		/// <summary>
-		///		Gets the raw response for the details of the specified item set.
-		/// </summary>
-		/// <param name="setId">The id of the item set to get details for.</param>
-		/// <returns>
-		///		The JSON response returned from the API call.
-		/// </returns>
-		public string GetItemSetRaw(int setId)
-		{
-			StringBuilder query = new StringBuilder();
-			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
-
-			string urlPath = string.Format(ApiSettings[_apiKeyItemSet].Path, setId);
-
-			return GetResponse(urlPath, query.ToString());
-		}
-
-		#endregion
-
-		#region Quest
-
-		/// <summary>
-		///		Deserializes the JSON response from <see cref="M:GetQuestRaw"/>.
-		/// </summary>
-		/// <param name="jsonResponse">The string to deserialize.</param>
-		/// <returns>
-		///		A deserialized <see cref="QuestResponse"/> object.
-		/// </returns>
-		public QuestResponse DeserializeQuestResponse(string jsonResponse)
-		{
-			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(QuestResponse));
-
-			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
-			{
-				QuestResponse deserializedResponse = (QuestResponse)serializer.ReadObject(stream);
-				deserializedResponse.JsonResponse = jsonResponse;
-
-				return deserializedResponse;
-			}
-		}
-
-		/// <summary>
-		///		Gets the details for the specified quest.
-		/// </summary>
-		/// <param name="questId">The id of the quest to get details for.</param>
-		/// <returns>
-		///		A deserialized <see cref="QuestResponse"/> object.
-		/// </returns>
-		public QuestResponse GetQuest(int questId)
-		{
-			return DeserializeQuestResponse(GetQuestRaw(questId));
-		}
-
-		/// <summary>
-		///		Gets the raw response for the details for the specified quest.
-		/// </summary>
-		/// <param name="questId">The id of the quest to get details for.</param>
-		/// <returns>
-		///		The JSON response returned from the API call.
-		/// </returns>
-		public string GetQuestRaw(int questId)
-		{
-			StringBuilder query = new StringBuilder();
-			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
-
-			string urlPath = string.Format(ApiSettings[_apiKeyQuest].Path, questId);
-
-			return GetResponse(urlPath, query.ToString());
-		}
-
-		#endregion
-
-		#region Rated Battleground Ladder
+		#region Rated Battleground Ladder API
 
 		/// <summary>
 		///		Deserializes the JSON response from <see cref="M:GetArenaLadderRaw"/>.
@@ -795,7 +1038,62 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		#endregion
 
-		#region Realm Status
+		#endregion
+
+		#region Quest API
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetQuestRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A deserialized <see cref="QuestResponse"/> object.
+		/// </returns>
+		public QuestResponse DeserializeQuestResponse(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(QuestResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				QuestResponse deserializedResponse = (QuestResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the details for the specified quest.
+		/// </summary>
+		/// <param name="questId">The id of the quest to get details for.</param>
+		/// <returns>
+		///		A deserialized <see cref="QuestResponse"/> object.
+		/// </returns>
+		public QuestResponse GetQuest(int questId)
+		{
+			return DeserializeQuestResponse(GetQuestRaw(questId));
+		}
+
+		/// <summary>
+		///		Gets the raw response for the details for the specified quest.
+		/// </summary>
+		/// <param name="questId">The id of the quest to get details for.</param>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetQuestRaw(int questId)
+		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = string.Format(ApiSettings[_apiKeyQuest].Path, questId);
+
+			return GetResponse(urlPath, query.ToString());
+		}
+
+		#endregion
+
+		#region Realm Status API
 
 		/// <summary>
 		///		Deserializes the JSON response from <see cref="M:GetRealmStatusRaw"/>.
@@ -864,7 +1162,7 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		#endregion
 
-		#region Recipe
+		#region Recipe API
 
 		/// <summary>
 		///		Deserializes the JSON response from <see cref="M:GetRecipeRaw"/>.
@@ -917,6 +1215,59 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		#endregion
 
+		#region Spell API
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetSpellRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A deserialized <see cref="SpellResponse"/> object.
+		/// </returns>
+		public SpellResponse DeserializeSpellResponse(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(SpellResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				SpellResponse deserializedResponse = (SpellResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the details for the specified Spell.
+		/// </summary>
+		/// <param name="SpellId">The id of the Spell to get details for.</param>
+		/// <returns>
+		///		A deserialized <see cref="SpellResponse"/> object.
+		/// </returns>
+		public SpellResponse GetSpell(int SpellId)
+		{
+			return DeserializeSpellResponse(GetSpellRaw(SpellId));
+		}
+
+		/// <summary>
+		///		Gets the raw response for the details of the specified Spell.
+		/// </summary>
+		/// <param name="SpellId">The id of the Spell to get details for.</param>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetSpellRaw(int SpellId)
+		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = string.Format(ApiSettings[_apiKeySpell].Path, SpellId);
+
+			return GetResponse(urlPath, query.ToString());
+		}
+
+		#endregion
+
 		#region Data Resources
 
 		#region Battlegroups
@@ -960,12 +1311,14 @@ namespace openSourceC.WorldOfWarcraftClient
 		/// </returns>
 		public string GetBattlegroupsRaw()
 		{
+			string returnValue;
+
 			StringBuilder query = new StringBuilder();
 			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
 
 			string urlPath = ApiSettings[_apiKeyBattlegroups].Path;
 
-			return GetResponse(urlPath, query.ToString());
+			return (returnValue = GetResponse(urlPath, query.ToString()));
 		}
 
 		#endregion
@@ -1327,6 +1680,108 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		#endregion
 
+		#region Pet Types
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetPetTypesRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:PetTypesResponse"/> object.
+		/// </returns>
+		public PetTypesResponse DeserializePetTypesResponse(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(PetTypesResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				PetTypesResponse deserializedResponse = (PetTypesResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the pet types.
+		/// </summary>
+		/// <returns>
+		///		A deserialized <see cref="T:PetTypesResponse"/> object.
+		/// </returns>
+		public PetTypesResponse GetPetTypes()
+		{
+			return DeserializePetTypesResponse(GetPetTypesRaw());
+		}
+
+		/// <summary>
+		///		Gets the raw response for pet types.
+		/// </summary>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetPetTypesRaw()
+		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = ApiSettings[_apiKeyPetTypes].Path;
+
+			return GetResponse(urlPath, query.ToString());
+		}
+
+		#endregion
+
+		#region Talents
+
+		/// <summary>
+		///		Deserializes the JSON response from <see cref="M:GetTalentsRaw"/>.
+		/// </summary>
+		/// <param name="jsonResponse">The string to deserialize.</param>
+		/// <returns>
+		///		A deserialized <see cref="T:TalentsResponse"/> object.
+		/// </returns>
+		public TalentsResponse DeserializeTalentsResponse(string jsonResponse)
+		{
+			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(TalentsResponse));
+
+			using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(jsonResponse)))
+			{
+				TalentsResponse deserializedResponse = (TalentsResponse)serializer.ReadObject(stream);
+				deserializedResponse.JsonResponse = jsonResponse;
+
+				return deserializedResponse;
+			}
+		}
+
+		/// <summary>
+		///		Gets the talents.
+		/// </summary>
+		/// <returns>
+		///		A deserialized <see cref="T:TalentsResponse"/> object.
+		/// </returns>
+		public TalentsResponse GetTalents()
+		{
+			return DeserializeTalentsResponse(GetTalentsRaw());
+		}
+
+		/// <summary>
+		///		Gets the raw response for talents.
+		/// </summary>
+		/// <returns>
+		///		The JSON response returned from the API call.
+		/// </returns>
+		public string GetTalentsRaw()
+		{
+			StringBuilder query = new StringBuilder();
+			query.AppendQueryStringPair(_localeQueryStringKey, CurrentLocale);
+
+			string urlPath = ApiSettings[_apiKeyTalents].Path;
+
+			return GetResponse(urlPath, query.ToString());
+		}
+
+		#endregion
+
 		#endregion
 
 		#endregion
@@ -1335,13 +1790,14 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		private string GetResponse(HttpWebRequest request)
 		{
+			string returnValue;
+
 			try
 			{
 				request.AutomaticDecompression = DecompressionMethods.GZip;
 
 				HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 				string responseContentEncoding = response.Headers[HttpResponseHeader.ContentEncoding];
-				string responseString;
 
 				if (responseContentEncoding != null && responseContentEncoding.IndexOf("gzip", StringComparison.InvariantCultureIgnoreCase) != -1)
 				{
@@ -1349,7 +1805,7 @@ namespace openSourceC.WorldOfWarcraftClient
 					using (GZipStream gzip = new GZipStream(stream, CompressionMode.Decompress))
 					using (StreamReader reader = new StreamReader(gzip))
 					{
-						return (responseString = reader.ReadToEnd());
+						return (returnValue = reader.ReadToEnd());
 					}
 				}
 				else
@@ -1357,7 +1813,7 @@ namespace openSourceC.WorldOfWarcraftClient
 					using (Stream stream = response.GetResponseStream())
 					using (StreamReader reader = new StreamReader(stream))
 					{
-						return (responseString = reader.ReadToEnd());
+						return (returnValue = reader.ReadToEnd());
 					}
 				}
 			}
@@ -1365,18 +1821,27 @@ namespace openSourceC.WorldOfWarcraftClient
 			{
 				if (ex.Response == null) { throw; }
 
-				using (Stream stream = ex.Response.GetResponseStream())
+				try
 				{
-					DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ErrorResponse));
-					ErrorResponse deserializedResponse = (ErrorResponse)serializer.ReadObject(stream);
+					using (Stream stream = ex.Response.GetResponseStream())
+					{
+						DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(ErrorResponse));
+						ErrorResponse deserializedResponse = (ErrorResponse)serializer.ReadObject(stream);
 
-					throw new WorldOfWarcraftApiException(deserializedResponse.Status, deserializedResponse.Reason);
+						throw new WorldOfWarcraftApiException(deserializedResponse.Status, deserializedResponse.Reason);
+					}
 				}
+				catch (WorldOfWarcraftApiException) { throw; }
+				catch { }
+
+				throw;
 			}
 		}
 
 		private string GetResponse(string urlPath, string queryString)
 		{
+			string returnValue;
+
 			RegionElement settings = WorldOfWarcraftSection.Instance.Regions[CurrentRegionKey];
 
 			UriBuilder requestUri = new UriBuilder(settings.Host);
@@ -1402,17 +1867,17 @@ namespace openSourceC.WorldOfWarcraftClient
 				request.Headers.Add("Authorization", authorizationHeader);
 			}
 
-			return GetResponse(request);
+			return (returnValue = GetResponse(request));
 		}
 
 		private string GetSignature(string stringToSign)
 		{
-			string signature;
+			string returnValue;
 
 			using (HMACSHA1 hmac = new HMACSHA1(Encoding.UTF8.GetBytes(PrivateKey)))
 			{
 				byte[] hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(stringToSign));
-				return (signature = Convert.ToBase64String(hash));
+				return (returnValue = Convert.ToBase64String(hash));
 			}
 		}
 
