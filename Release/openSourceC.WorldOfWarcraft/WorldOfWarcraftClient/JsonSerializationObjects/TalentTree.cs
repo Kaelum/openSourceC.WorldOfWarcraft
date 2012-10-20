@@ -12,11 +12,16 @@ namespace openSourceC.WorldOfWarcraftClient
 	public class TalentTree
 	{
 		/// <summary></summary>
-		[DataMember(Name = "points")]
-		public string Points;
+		[DataMember(Name = "column")]
+		public int Column;
 
 		/// <summary></summary>
-		[DataMember(Name = "total")]
-		public int Total;
+		[DataMember(Name = "tier")]
+		public int Tier;
+
+
+		/// <summary></summary>
+		[DataMember(Name = "spell")]
+		public Spell Spell;
 	}
 }

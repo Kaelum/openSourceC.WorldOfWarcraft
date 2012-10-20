@@ -12,12 +12,12 @@ namespace openSourceC.WorldOfWarcraftClient
 	public class Guild
 	{
 		/// <summary></summary>
-		[DataMember(Name = "name")]
-		public string Name;
+		[DataMember(Name = "achievementPoints")]
+		public int AchievementPoints;
 
 		/// <summary></summary>
-		[DataMember(Name = "realm")]
-		public string Realm;
+		[DataMember(Name = "battlegroup")]
+		public string Battlegroup;
 
 		/// <summary></summary>
 		[DataMember(Name = "level")]
@@ -28,8 +28,12 @@ namespace openSourceC.WorldOfWarcraftClient
 		public int Members;
 
 		/// <summary></summary>
-		[DataMember(Name = "achievementPoints")]
-		public int AchievementPoints;
+		[DataMember(Name = "name")]
+		public string Name;
+
+		/// <summary></summary>
+		[DataMember(Name = "realm")]
+		public string Realm;
 
 
 		/// <summary></summary>

@@ -13,19 +13,19 @@ namespace openSourceC.WorldOfWarcraftClient
 	{
 		/// <summary></summary>
 		[DataMember(Name = "enchant")]
-		public int Enchant;
+		public int? Enchant;
 
 		/// <summary></summary>
 		[DataMember(Name = "extraSocket")]
-		public bool ExtraSocket;
+		public bool? ExtraSocket;
 
 		/// <summary></summary>
 		[DataMember(Name = "gem0")]
-		public int Gem0;
+		public int? Gem0;
 
 		/// <summary></summary>
 		[DataMember(Name = "gem1")]
-		public int Gem1;
+		public int? Gem1;
 
 
 		/// <summary></summary>

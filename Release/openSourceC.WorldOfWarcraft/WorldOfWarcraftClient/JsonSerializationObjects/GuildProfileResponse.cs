@@ -53,6 +53,18 @@ namespace openSourceC.WorldOfWarcraftClient
 		public ProfileAchievements Achievements;
 
 		/// <summary></summary>
+		[IgnoreDataMember]
+		public List<GuildChallenge> Challenges;
+
+		/// <summary></summary>
+		[DataMember(Name = "challenge")]
+		public GuildChallenge[] ChallengesValue
+		{
+			get { return (Challenges == null ? null : Challenges.ToArray()); }
+			set { Challenges = (value == null ? null : new List<GuildChallenge>(value)); }
+		}
+
+		/// <summary></summary>
 		[DataMember(Name = "emblem")]
 		public Emblem Emblem;
 
@@ -66,6 +78,18 @@ namespace openSourceC.WorldOfWarcraftClient
 		{
 			get { return (Members == null ? null : Members.ToArray()); }
 			set { Members = (value == null ? null : new List<GuildMember>(value)); }
+		}
+
+		/// <summary></summary>
+		[IgnoreDataMember]
+		public List<News> News;
+
+		/// <summary></summary>
+		[DataMember(Name = "news")]
+		public News[] NewsValue
+		{
+			get { return (News == null ? null : News.ToArray()); }
+			set { News = (value == null ? null : new List<News>(value)); }
 		}
 	}
 }

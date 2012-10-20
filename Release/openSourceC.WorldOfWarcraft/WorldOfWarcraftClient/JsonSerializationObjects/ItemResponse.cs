@@ -100,6 +100,14 @@ namespace openSourceC.WorldOfWarcraftClient
 		public string Name;
 
 		/// <summary></summary>
+		[DataMember(Name = "nameDescription")]
+		public string NameDescription;
+
+		/// <summary></summary>
+		[DataMember(Name = "nameDescriptionColor")]
+		public string NameDescriptionColor;
+
+		/// <summary></summary>
 		[DataMember(Name = "quality")]
 		public int Quality;
 

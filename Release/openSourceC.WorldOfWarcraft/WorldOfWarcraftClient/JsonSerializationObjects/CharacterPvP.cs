@@ -25,7 +25,7 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		/// <summary></summary>
 		[DataMember(Name = "ratedBattlegrounds")]
-		public RatedBattleground RatedBattlegrounds;
+		public RatedBattlegrounds RatedBattlegrounds;
 
 		/// <summary></summary>
 		[DataMember(Name = "totalHonorableKills")]

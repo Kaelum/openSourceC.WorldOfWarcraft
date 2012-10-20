@@ -34,17 +34,5 @@ namespace openSourceC.WorldOfWarcraftClient
 			get { return (Minor == null ? null : Minor.ToArray()); }
 			set { Minor = (value == null ? null : new List<TalentGlyph>(value)); }
 		}
-
-		/// <summary></summary>
-		[IgnoreDataMember]
-		public List<TalentGlyph> Prime;
-
-		/// <summary></summary>
-		[DataMember(Name = "prime")]
-		public TalentGlyph[] PrimeValue
-		{
-			get { return (Prime == null ? null : Prime.ToArray()); }
-			set { Prime = (value == null ? null : new List<TalentGlyph>(value)); }
-		}
 	}
 }

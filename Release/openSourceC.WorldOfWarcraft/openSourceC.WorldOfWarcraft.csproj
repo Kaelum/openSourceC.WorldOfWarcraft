@@ -86,16 +86,43 @@
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BattlegroundRecord.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Battlegroup.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BattlegroupsResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BattlePetSlot.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ChallengeGroup.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ChallengeMap.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterFeed.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterFeedAchievement.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterItem.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterMounts.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterPvP.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BattlePetAbilityResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BattlePetSpeciesResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BattlePetAbility.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BattlePetStatsResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Challenge.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BattlePet.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\TalentTier.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\PetSpecs.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\TalentGroupGlyph.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\TalentGroup.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Talent.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\TalentsResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\PetType.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\PetTypesResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\SpellResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\GuildChallenge.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Member.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Mount.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterPets.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\News.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Spec.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Time.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\RealmChallengeResponse.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Criteria.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ItemSetBonus.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ItemSetResponse.cs" />
-    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Pet.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\HunterPet.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\PvPZone.cs" />
-    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\RatedBattleground.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\RatedBattlegrounds.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\RatedBattlegroundLadderResponse.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Realm.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\RecipeResponse.cs" />
@@ -106,7 +133,7 @@
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ArenaTeamResponse.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Auction.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionDataFileResponse.cs" />
-    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionDataHeaderResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionDataStatusResponse.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionHouse.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BonusStats.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Boss.cs" />
@@ -120,7 +147,7 @@
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Damage.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\DataAchievement.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\DataAchievementsResponse.cs" />
-    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionDataHeader.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AuctionDataStatus.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\GuildPerk.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\GuildPerksResponse.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\GuildReward.cs" />
@@ -145,7 +172,7 @@
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\SocketInfo.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Spell.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\TalentGlyph.cs" />
-    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Talent.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\TalentBuild.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterTitle.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Emblem.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Enumerators.cs" />
@@ -187,6 +214,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="License.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Blizzard-README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

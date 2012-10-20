@@ -5,11 +5,11 @@ using System.Runtime.Serialization;
 namespace openSourceC.WorldOfWarcraftClient
 {
 	/// <summary>
-	///		Summary description for Pet.
+	///		Summary description for HunterPet.
 	/// </summary>
-	[DataContract(Name = "pet")]
+	[DataContract(Name = "hunterPet")]
 	[Serializable]
-	public class Pet
+	public class HunterPet
 	{
 		/// <summary></summary>
 		[DataMember(Name = "creature")]
@@ -30,6 +30,6 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		/// <summary></summary>
 		[DataMember(Name = "talents")]
-		public Talent Talents;
+		public TalentBuild Talents;
 	}
 }

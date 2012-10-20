@@ -36,11 +36,11 @@ namespace openSourceC.WorldOfWarcraftClient
 		public string Name;
 
 		/// <summary></summary>
-		[DataMember(Name = "range")]
-		public string Range;
+		[DataMember(Name = "powerCost")]
+		public string PowerCost;
 
 		/// <summary></summary>
-		[DataMember(Name = "subtext")]
-		public string Subtext;
+		[DataMember(Name = "range")]
+		public string Range;
 	}
 }

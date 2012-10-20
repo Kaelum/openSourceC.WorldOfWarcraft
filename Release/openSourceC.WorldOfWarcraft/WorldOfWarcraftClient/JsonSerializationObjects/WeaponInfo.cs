@@ -12,24 +12,15 @@ namespace openSourceC.WorldOfWarcraftClient
 	public class WeaponInfo
 	{
 		/// <summary></summary>
-		[DataMember(Name = "weaponSpeed")]
-		public double WeaponSpeed;
+		[DataMember(Name = "damage")]
+		public Damage DamageValue;
 
 		/// <summary></summary>
 		[DataMember(Name = "dps")]
 		public double Dps;
 
-
 		/// <summary></summary>
-		[IgnoreDataMember]
-		public List<Damage> Damage;
-
-		/// <summary></summary>
-		[DataMember(Name = "damage")]
-		public Damage[] DamageValue
-		{
-			get { return (Damage == null ? null : Damage.ToArray()); }
-			set { Damage = (value == null ? null : new List<Damage>(value)); }
-		}
+		[DataMember(Name = "weaponSpeed")]
+		public double WeaponSpeed;
 	}
 }

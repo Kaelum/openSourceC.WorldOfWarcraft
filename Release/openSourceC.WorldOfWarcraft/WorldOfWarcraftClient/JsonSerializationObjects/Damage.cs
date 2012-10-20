@@ -12,11 +12,11 @@ namespace openSourceC.WorldOfWarcraftClient
 	public class Damage
 	{
 		/// <summary></summary>
-		[DataMember(Name = "minDamage")]
-		public int MinDamage;
+		[DataMember(Name = "min")]
+		public int Min;
 
 		/// <summary></summary>
-		[DataMember(Name = "maxDamage")]
-		public int MaxDamage;
+		[DataMember(Name = "max")]
+		public int Max;
 	}
 }

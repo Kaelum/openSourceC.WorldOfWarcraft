@@ -12,36 +12,27 @@ namespace openSourceC.WorldOfWarcraftClient
 	public class Talent
 	{
 		/// <summary></summary>
-		[DataMember(Name = "build")]
-		public string Build;
+		[DataMember(Name = "id")]
+		public int Id;
 
 		/// <summary></summary>
-		[DataMember(Name = "icon")]
-		public string Icon;
+		[DataMember(Name = "key")]
+		public string Key;
 
 		/// <summary></summary>
 		[DataMember(Name = "name")]
 		public string Name;
 
 		/// <summary></summary>
-		[DataMember(Name = "selected")]
-		public bool Selected;
-
-
-		/// <summary></summary>
-		[DataMember(Name = "glyphs")]
-		public TalentGlyphs Glyphs;
+		[DataMember(Name = "strongAgainstId")]
+		public int StrongAgainstId;
 
 		/// <summary></summary>
-		[IgnoreDataMember]
-		public List<TalentTree> Trees;
+		[DataMember(Name = "typeAbilityId")]
+		public int TypeAbilityId;
 
 		/// <summary></summary>
-		[DataMember(Name = "trees")]
-		public TalentTree[] TreesValue
-		{
-			get { return (Trees == null ? null : Trees.ToArray()); }
-			set { Trees = (value == null ? null : new List<TalentTree>(value)); }
-		}
+		[DataMember(Name = "weakAgainstId")]
+		public int WeakAgainstId;
 	}
 }

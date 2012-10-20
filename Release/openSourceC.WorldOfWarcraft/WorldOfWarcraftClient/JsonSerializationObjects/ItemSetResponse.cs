@@ -22,6 +22,18 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		/// <summary></summary>
 		[IgnoreDataMember]
+		public List<int> Items;
+
+		/// <summary></summary>
+		[DataMember(Name = "items")]
+		public int[] ItemsValue
+		{
+			get { return (Items == null ? null : Items.ToArray()); }
+			set { Items = (value == null ? null : new List<int>(value)); }
+		}
+
+		/// <summary></summary>
+		[IgnoreDataMember]
 		public List<ItemSetBonus> SetBonuses;
 
 		/// <summary></summary>

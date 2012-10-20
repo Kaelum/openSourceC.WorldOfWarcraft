@@ -12,6 +12,10 @@ namespace openSourceC.WorldOfWarcraftClient
 	public class CharacterFeedAchievement
 	{
 		/// <summary></summary>
+		[DataMember(Name = "accountWide")]
+		public bool AccountWide;
+
+		/// <summary></summary>
 		[DataMember(Name = "description")]
 		public string Description;
 
@@ -26,6 +30,10 @@ namespace openSourceC.WorldOfWarcraftClient
 		/// <summary></summary>
 		[DataMember(Name = "points")]
 		public int Points;
+
+		/// <summary></summary>
+		[DataMember(Name = "reward")]
+		public string Reward;
 
 		/// <summary></summary>
 		[DataMember(Name = "title")]

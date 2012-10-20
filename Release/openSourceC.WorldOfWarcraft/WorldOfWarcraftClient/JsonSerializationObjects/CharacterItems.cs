@@ -29,10 +29,6 @@ namespace openSourceC.WorldOfWarcraftClient
 		public CharacterItem Chest;
 
 		/// <summary></summary>
-		[DataMember(Name = "hands")]
-		public CharacterItem Hands;
-
-		/// <summary></summary>
 		[DataMember(Name = "feet")]
 		public CharacterItem Feet;
 
@@ -43,6 +39,10 @@ namespace openSourceC.WorldOfWarcraftClient
 		/// <summary></summary>
 		[DataMember(Name = "finger2")]
 		public CharacterItem Finger2;
+
+		/// <summary></summary>
+		[DataMember(Name = "hands")]
+		public CharacterItem Hands;
 
 		/// <summary></summary>
 		[DataMember(Name = "head")]
