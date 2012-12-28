@@ -92,6 +92,7 @@
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterFeed.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterFeedAchievement.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterItem.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterItemStat.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterMounts.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\CharacterPvP.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BattlePetAbilityResponse.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\RatedBattlegroundLadderResponse.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Realm.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\RecipeResponse.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\TooltipParametersUpgrade.cs" />
     <Compile Include="WorldOfWarcraftClient\WowExtensions.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\AchievementResponse.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ProfileAchievements.cs" />

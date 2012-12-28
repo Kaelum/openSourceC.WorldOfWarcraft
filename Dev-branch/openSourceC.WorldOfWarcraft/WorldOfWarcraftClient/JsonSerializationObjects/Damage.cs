@@ -13,10 +13,10 @@ namespace openSourceC.WorldOfWarcraftClient
 	{
 		/// <summary></summary>
 		[DataMember(Name = "min")]
-		public int Min;
+		public double Min;
 
 		/// <summary></summary>
 		[DataMember(Name = "max")]
-		public int Max;
+		public double Max;
 	}
 }
