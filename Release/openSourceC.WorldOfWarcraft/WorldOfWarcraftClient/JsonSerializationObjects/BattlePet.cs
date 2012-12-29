@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace openSourceC.WorldOfWarcraftClient
@@ -12,8 +13,28 @@ namespace openSourceC.WorldOfWarcraftClient
 	public class BattlePet
 	{
 		/// <summary></summary>
-		[DataMember(Name = "battlePetId")]
-		public int BattlePetId;
+		[IgnoreDataMember]
+		public long? BattlePetGuid;
+
+		/// <summary></summary>
+		[DataMember(Name = "battlePetGuid")]
+		public string BattlePetGuidValue
+		{
+			get { return (BattlePetGuid == null ? null : BattlePetGuid.Value.ToString("X16")); }
+			set { BattlePetGuid = (string.IsNullOrWhiteSpace(value) ? (long?)null : long.Parse(value, NumberStyles.AllowHexSpecifier)); }
+		}
+
+		///// <summary></summary>
+		//[IgnoreDataMember]
+		//public Guid BattlePetGuid;
+
+		///// <summary></summary>
+		//[DataMember(Name = "battlePetGuid")]
+		//public string BattlePetGuidValue
+		//{
+		//	get { return (BattlePetGuid == null ? null : BattlePetGuid.ToString("N")); }
+		//	set { BattlePetGuid = (string.IsNullOrWhiteSpace(value) ? Guid.Empty : new Guid(value)); }
+		//}
 
 		/// <summary></summary>
 		[DataMember(Name = "canBattle")]

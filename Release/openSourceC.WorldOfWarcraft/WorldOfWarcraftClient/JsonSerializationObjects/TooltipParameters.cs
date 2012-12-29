@@ -29,15 +29,19 @@ namespace openSourceC.WorldOfWarcraftClient
 
 
 		/// <summary></summary>
+		[IgnoreDataMember]
+		public List<int> Set;
+
+		/// <summary></summary>
 		[DataMember(Name = "set")]
-		public int[] Set
+		public int[] SetValue
 		{
-			get { return (SetValue == null ? null : SetValue.ToArray()); }
-			set { SetValue = (value == null ? null : new List<int>(value)); }
+			get { return (Set == null ? null : Set.ToArray()); }
+			set { Set = (value == null ? null : new List<int>(value)); }
 		}
 
 		/// <summary></summary>
-		[IgnoreDataMember]
-		public List<int> SetValue;
+		[DataMember(Name = "upgrade")]
+		public TooltipParametersUpgrade Upgrade;
 	}
 }
