@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Web;
 
@@ -70,6 +72,18 @@ namespace openSourceC.WorldOfWarcraftClient
 		public static DateTime ToDateTime(this long value)
 		{
 			return ZeroDate.AddMilliseconds(value);
+		}
+
+		/// <summary>
+		///		
+		/// </summary>
+		/// <param name="enumerator"></param>
+		/// <returns></returns>
+		internal static string ToEnumMemberString(this Enum enumerator)
+		{
+			EnumMemberAttribute attribute = enumerator.GetType().GetCustomAttributes(typeof(EnumMemberAttribute), true).SingleOrDefault() as EnumMemberAttribute;
+
+			return (attribute == null ? enumerator.ToString().ToLowerInvariant() : attribute.Value);
 		}
 
 		/// <summary>
