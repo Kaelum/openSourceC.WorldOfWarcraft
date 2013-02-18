@@ -31,21 +31,7 @@ namespace openSourceC.WorldOfWarcraftClient
 		[DataMember(Name = "powerType")]
 		public string PowerTypeValue
 		{
-			get
-			{
-				switch (PowerType)
-				{
-					case PowerTypeEnum.RunicPower:
-					{
-						return "runic-power";
-					}
-
-					default:
-					{
-						return PowerType.ToString().ToLowerInvariant();
-					}
-				}
-			}
+			get { return PowerType.ToEnumMemberString(); }
 
 			set
 			{

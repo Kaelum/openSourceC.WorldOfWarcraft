@@ -85,7 +85,7 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		/// <summary></summary>
 		[DataMember(Name = "mainHandExpertise")]
-		public int MainHandExpertise;
+		public double MainHandExpertise;
 
 		/// <summary></summary>
 		[DataMember(Name = "mainHandSpeed")]
@@ -121,7 +121,7 @@ namespace openSourceC.WorldOfWarcraftClient
 
 		/// <summary></summary>
 		[DataMember(Name = "offHandExpertise")]
-		public int OffHandExpertise;
+		public double OffHandExpertise;
 
 		/// <summary></summary>
 		[DataMember(Name = "offHandSpeed")]
@@ -139,18 +139,6 @@ namespace openSourceC.WorldOfWarcraftClient
 		[DataMember(Name = "power")]
 		public int Power;
 
-		///// <summary></summary>
-		//[IgnoreDataMember]
-		//public PowerTypeEnum PowerType;
-
-		///// <summary></summary>
-		//[DataMember(Name = "powerType")]
-		//public string PowerTypeValue
-		//{
-		//	get { return PowerType.ToString().ToLowerInvariant(); }
-		//	set { PowerType = (PowerTypeEnum)Enum.Parse(typeof(PowerTypeEnum), value, true); }
-		//}
-
 		/// <summary></summary>
 		[IgnoreDataMember]
 		public PowerTypeEnum PowerType;
@@ -159,21 +147,7 @@ namespace openSourceC.WorldOfWarcraftClient
 		[DataMember(Name = "powerType")]
 		public string PowerTypeValue
 		{
-			get
-			{
-				switch (PowerType)
-				{
-					case PowerTypeEnum.RunicPower:
-					{
-						return "runic-power";
-					}
-
-					default:
-					{
-						return PowerType.ToString().ToLowerInvariant();
-					}
-				}
-			}
+			get { return PowerType.ToEnumMemberString(); }
 
 			set
 			{
@@ -195,12 +169,24 @@ namespace openSourceC.WorldOfWarcraftClient
 		public double PvpPower;
 
 		/// <summary></summary>
+		[DataMember(Name = "pvpPowerDamage")]
+		public double PvpPowerDamage;
+
+		/// <summary></summary>
+		[DataMember(Name = "pvpPowerHealing")]
+		public double PvpPowerHealing;
+
+		/// <summary></summary>
 		[DataMember(Name = "pvpPowerRating")]
 		public int PvpPowerRating;
 
 		/// <summary></summary>
 		[DataMember(Name = "pvpResilience")]
 		public double PvpResilience;
+
+		/// <summary></summary>
+		[DataMember(Name = "pvpResilienceBonus")]
+		public double PvpResilienceBonus;
 
 		/// <summary></summary>
 		[DataMember(Name = "pvpResilienceRating")]
@@ -211,20 +197,20 @@ namespace openSourceC.WorldOfWarcraftClient
 		public int RangedAttackPower;
 
 		/// <summary></summary>
-		[DataMember(Name = "rangedDmgMax")]
-		public double RangedDmgMax;
-
-		/// <summary></summary>
-		[DataMember(Name = "rangedDmgMin")]
-		public double RangedDmgMin;
-
-		/// <summary></summary>
 		[DataMember(Name = "rangedCrit")]
 		public double RangedCrit;
 
 		/// <summary></summary>
 		[DataMember(Name = "rangedCritRating")]
 		public int RangedCritRating;
+
+		/// <summary></summary>
+		[DataMember(Name = "rangedDmgMax")]
+		public double RangedDmgMax;
+
+		/// <summary></summary>
+		[DataMember(Name = "rangedDmgMin")]
+		public double RangedDmgMin;
 
 		/// <summary></summary>
 		[DataMember(Name = "rangedDps")]
