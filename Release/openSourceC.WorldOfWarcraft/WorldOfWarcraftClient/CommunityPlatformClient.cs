@@ -56,6 +56,9 @@ namespace openSourceC.WorldOfWarcraftClient
 		private const string _qualityIdQueryStringKey = "qualityId";
 		private const string _realmsQueryStringKey = "realms";
 
+		private string _privateKey;
+		private string _publicKey;
+
 		private string _currentRegionKey;
 		private string _currentLocale;
 
@@ -65,8 +68,18 @@ namespace openSourceC.WorldOfWarcraftClient
 		/// <summary>
 		///		Class constructor.
 		/// </summary>
-		public CommunityPlatformClient()
+		public CommunityPlatformClient() : this(null, null) { }
+
+		/// <summary>
+		///		Class constructor.
+		/// </summary>
+		/// <param name="privateKey">The private key to use.  Overrides config setting.</param>
+		/// <param name="publicKey">The public key to use.  Overrides config setting.</param>
+		public CommunityPlatformClient(string privateKey, string publicKey)
 		{
+			_privateKey = privateKey;
+			_publicKey = publicKey;
+
 			_currentRegionKey = WorldOfWarcraftSection.Instance.Regions.Default;
 			_currentLocale = null;
 		}
@@ -140,7 +153,7 @@ namespace openSourceC.WorldOfWarcraftClient
 		///	</summary>
 		private string PrivateKey
 		{
-			get { return WorldOfWarcraftSection.Instance.PrivateKey; }
+			get { return (_privateKey != null ? _privateKey : WorldOfWarcraftSection.Instance.PrivateKey); }
 		}
 
 		/// <summary>
@@ -148,7 +161,7 @@ namespace openSourceC.WorldOfWarcraftClient
 		///	</summary>
 		private string PublicKey
 		{
-			get { return WorldOfWarcraftSection.Instance.PublicKey; }
+			get { return (_publicKey != null ? _publicKey : WorldOfWarcraftSection.Instance.PublicKey); }
 		}
 
 		private bool UseAuthorization

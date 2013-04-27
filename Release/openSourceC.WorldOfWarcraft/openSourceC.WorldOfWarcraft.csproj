@@ -101,6 +101,7 @@
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BattlePetStatsResponse.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\Challenge.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\BattlePet.cs" />
+    <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\ItemSubClass.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\TalentTier.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\PetSpecs.cs" />
     <Compile Include="WorldOfWarcraftClient\JsonSerializationObjects\TalentGroupGlyph.cs" />

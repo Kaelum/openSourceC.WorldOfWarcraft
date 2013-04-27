@@ -61,6 +61,10 @@ namespace openSourceC.WorldOfWarcraftClient
 		public CharacterItem Neck;
 
 		/// <summary></summary>
+		[DataMember(Name = "offHand")]
+		public CharacterItem OffHand;
+
+		/// <summary></summary>
 		[DataMember(Name = "ranged")]
 		public CharacterItem Ranged;
 

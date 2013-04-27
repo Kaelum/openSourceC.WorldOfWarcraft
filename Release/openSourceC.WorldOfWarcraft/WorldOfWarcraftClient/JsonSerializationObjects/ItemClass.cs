@@ -18,5 +18,17 @@ namespace openSourceC.WorldOfWarcraftClient
 		/// <summary></summary>
 		[DataMember(Name = "name")]
 		public string Name;
+
+		/// <summary></summary>
+		[IgnoreDataMember]
+		public List<ItemSubClass> SubClasses;
+
+		/// <summary></summary>
+		[DataMember(Name = "subclasses")]
+		public ItemSubClass[] SubClassesValue
+		{
+			get { return (SubClasses == null ? null : SubClasses.ToArray()); }
+			set { SubClasses = (value == null ? null : new List<ItemSubClass>(value)); }
+		}
 	}
 }
